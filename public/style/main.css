@@ -1,0 +1,71 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: #e6d3ff;
+background: -moz-radial-gradient(center, ellipse cover,  #e6d3ff 0%, #d9bfff 100%);
+background: -webkit-radial-gradient(center, ellipse cover,  #e6d3ff 0%,#d9bfff 100%);
+background: radial-gradient(ellipse at center,  #e6d3ff 0%,#d9bfff 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6d3ff', endColorstr='#d9bfff',GradientType=1 );
+
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
+#slider {
+  position: relative;
+  width: 950px;
+  height: 500px;
+  border: 4px solid #fff;
+  margin: 20px auto;
+  border-radius: 15px;
+  box-shadow: 0px 3px 10px rgba(50,50,50, .6);
+  background-color: #fff;
+}
+
+#slider img {
+  position: absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+#slide2 {
+  z-index: 15;
+}
+
+.controls {
+  z-index: 20;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  border-radius: 20px;
+  background: rgba( 250, 250, 250, .55);
+}
+
+.controls .fa {
+  font-size: 1.5em;
+  margin: 5px;
+  cursor: pointer;
+  color: #4B0082;
+}
+
+.fa.paw.current {
+  color: #814CA7;
+}
+
+.controls .fa:hover {
+  color: #814CA7;
+}
+
+.infoBox p {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, .55);
+  border-radius: 10px;
+  padding: 15px;
+}
