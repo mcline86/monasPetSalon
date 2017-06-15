@@ -21,7 +21,7 @@ function setSlide (i) {  //set slide as current
   //currentSlide = i;
   $('#slide2').hide();
   $('#slide2').attr('src', 'images/' + images[i]);
-  $('#slide2').fadeIn(1000, function() {
+  $('#slide2').fadeIn(1400, function() {
     $('#slide1').attr('src', 'images/' + images[i]);
     $('#slide2').hide();
   });
@@ -41,7 +41,6 @@ function nextSlide() {
   clearTimeout(timer);
   currentSlide++;
   if(currentSlide >= images.length) currentSlide = 0;
-  setSlide(currentSlide);
   slideLoop();
 }
 
@@ -49,7 +48,6 @@ function prevSlide() {
   clearTimeout(timer);
   currentSlide--;
   if(currentSlide < 0) currentSlide = images.length - 1;
-  setSlide(currentSlide);
   slideLoop();
 }
 
@@ -67,10 +65,9 @@ function buildControls() {
   $('#next').on('click', function (e) {  nextSlide();  });
 
   $('.paw').on('click', function (e) {
+    window.clearTimeout(timer);
     var num = $(this).data('img');
     currentSlide = num;
-    setSlide(num);
-    clearTimeout(timer);
     slideLoop();
   });
 }

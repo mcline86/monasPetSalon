@@ -1,11 +1,16 @@
-var express = require("express"),
-    app     = express(),
-    mongoose = require("mongoose"),
-    flash    = require("connect-flash"),
-    bodyParser = require("body-parser"),
+var express        = require("express"),
+    app            = express(),
+    mongoose       = require("mongoose"),
+    flash          = require("connect-flash"),
+    bodyParser     = require("body-parser"),
+    Appointment    = require("./models/appointment"),
+    Image          = require("./models/image"),
+    Logon          = require("./models/logon"),
     methodOverride = require("method-override");
 
 
+
+mongoose.connect("mongodb://localhost/mona");
 
 app.use(express.static(__dirname + "/public")); // set default folder to /public
 
@@ -21,7 +26,7 @@ app.use(require("express-session")({           // Sessions needed for passport i
 
 
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
     res.render("index");
 });
 
@@ -33,12 +38,46 @@ app.get("/about", function (req, res) {
   res.render("about");
 });
 
-app.get("/gallery", function(req, res) {
+app.get("/gallery", function (req, res) {
   res.render("gallery");
 });
+
+//===================================================
+//==============     Admin Routes       =============
+//===================================================
+
+app.get("/admin", function (req, res) {
+  res.render("admin/index.ejs");
+});
+
+app.post("/admin/new", function (req, res) {
+  //Create new user here
+});
+
 
 //===================================================
 //==================   Listening   ==================
 app.listen("8080", "127.0.0.1", function () {
    console.log("The Server has Started!!");
+   Logon.findOne({name: "mike"}, function(err, usr) {
+     if(err){
+       console.log("err");
+     }
+     else {
+       if(usr == null) {
+         var mike = {
+           name: "mike",
+           password: "password",
+         };
+         Logon.create(mike, function(err, me) {
+           if(err){
+             console.log(err);
+           }
+           else {
+             console.log(me);
+           }
+         })
+       }
+     }
+   });
 });

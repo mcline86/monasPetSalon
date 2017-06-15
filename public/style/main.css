@@ -5,11 +5,11 @@ html {
 body {
   height: 100%;
   background: #e6d3ff;
-background: -moz-radial-gradient(center, ellipse cover,  #e6d3ff 0%, #d9bfff 100%);
-background: -webkit-radial-gradient(center, ellipse cover,  #e6d3ff 0%,#d9bfff 100%);
-background: radial-gradient(ellipse at center,  #e6d3ff 0%,#d9bfff 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6d3ff', endColorstr='#d9bfff',GradientType=1 );
-
+  background: -moz-radial-gradient(center, ellipse cover,  #e6d3ff 0%, #d9bfff 100%);
+  background: -webkit-radial-gradient(center, ellipse cover,  #e6d3ff 0%,#d9bfff 100%);
+  background: radial-gradient(ellipse at center,  #e6d3ff 0%,#d9bfff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6d3ff', endColorstr='#d9bfff',GradientType=1 );
+  background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
 }
