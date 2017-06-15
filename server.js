@@ -1,6 +1,8 @@
 var express        = require("express"),
     app            = express(),
     mongoose       = require("mongoose"),
+    passport       = require("passport"),
+    LocalStrategy  = require("passport-local"),
     flash          = require("connect-flash"),
     bodyParser     = require("body-parser"),
     Appointment    = require("./models/appointment"),
@@ -12,11 +14,17 @@ var express        = require("express"),
 
 mongoose.connect("mongodb://localhost/mona");
 
+var basic = require("./routes/index"),
+    admin = require("./routes/admin"),
+    api   = require("./routes/api");
+
+
 app.use(express.static(__dirname + "/public")); // set default folder to /public
 
 app.use(bodyParser.urlencoded({extended: true})); //body parser for form data
 app.set("view engine", "ejs");                  //  Using EJS templates
 app.use(methodOverride("_method"));
+app.use(flash());
 
 app.use(require("express-session")({           // Sessions needed for passport integration (later)
   secret: "If you can read this, you shouldn't be here and you know it. . .",// Not you Michael...your cool
@@ -24,7 +32,18 @@ app.use(require("express-session")({           // Sessions needed for passport i
   saveUninitialized: false
 }));
 
+app.use(function(req, res, next){
+   res.locals.currentUser = req.user;
+   res.locals.error = req.flash("error");
+   res.locals.info = req.flash("info");
+   next();
+});
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(Logon.authenticate()));
+passport.serializeUser(Logon.serializeUser());
+passport.deserializeUser(Logon.deserializeUser());
 
 app.get("/", function (req, res) {
     res.render("index");
@@ -46,12 +65,19 @@ app.get("/gallery", function (req, res) {
 //==============     Admin Routes       =============
 //===================================================
 
-app.get("/admin", function (req, res) {
-  res.render("admin/index.ejs");
+app.get("/admin",isLoggedIn, admin.cp);
+app.post("/login", passport.authenticate("local",
+  {
+    successRedirect: "/admin",
+    failureRedirect: "back",
+    failureFlash: true
+  }), function(req, res) { //callback not used as passport will redirect
+
 });
 
-app.post("/admin/new", function (req, res) {
-  //Create new user here
+app.get("/logout", function(req, res) {
+  req.logout();
+  res.render("index");
 });
 
 
@@ -59,17 +85,14 @@ app.post("/admin/new", function (req, res) {
 //==================   Listening   ==================
 app.listen("8080", "127.0.0.1", function () {
    console.log("The Server has Started!!");
-   Logon.findOne({name: "mike"}, function(err, usr) {
+   Logon.findOne({username: "mike"}, function(err, usr) {
      if(err){
        console.log("err");
      }
      else {
        if(usr == null) {
-         var mike = {
-           name: "mike",
-           password: "password",
-         };
-         Logon.create(mike, function(err, me) {
+         var mike = new Logon({username: "mike"});
+         Logon.register(mike,"password", function(err, me) {
            if(err){
              console.log(err);
            }
@@ -81,3 +104,17 @@ app.listen("8080", "127.0.0.1", function () {
      }
    });
 });
+
+
+//===================================================
+//==================   MiddleWare   =================
+
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()) {
+    next();
+  }
+  else {
+    req.flash("error", "You need to be logged in to do that!");
+    res.redirect("/");
+  }
+}

@@ -33,12 +33,13 @@ function buildCal (){
 
 function fillCal(){
   let days = $('div.calDay');
-  let today = moment().date();
+  let today = moment(new Date()).date();
+  console.log(today);
   let start = moment().startOf('month').date();
   let end = moment().endOf('month').date();
   let firstBox = moment().startOf('month').day();
   for(let day = firstBox; day < end + firstBox; day++){
-    if(day == today){   $(days[day]).addClass("today");   }
+    if((day - firstBox)+1 == today){   $(days[day]).addClass("today");   }
     $(days[day]).removeClass('disabled');
     $(days[day]).attr('data-dOfM', (day - firstBox)+1);
     $(days[day]).html((day - firstBox)+1);
