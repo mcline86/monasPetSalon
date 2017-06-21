@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 
 var apptSchema = new mongoose.Schema({
-  name: String,
-  dog: String,
+  owner: String,
+  pet: String,
   breed: String,
-  timeSlot: String,
-  date: Date,
+  phone: String,
+  email: String,
+  timeSlot: Number,
+  date: String,
   about: String
 });
 
