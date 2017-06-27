@@ -38,40 +38,50 @@ function buildCal (){
 function fillCal(){
   let days = $('div.calDay');
   let today = moment(new Date()).date();
-  console.log(today);
   let start = moment().startOf('month').date();
   let end = moment().endOf('month').date();
   let firstBox = moment().startOf('month').day();
+  let tempData = moment(new Date()).set({date: 1});
   for(let day = firstBox; day < end + firstBox; day++){
     if((day - firstBox)+1 == today){   $(days[day]).addClass("today");   }
     $(days[day]).removeClass('disabled');
-    $(days[day]).attr('data-dOfM', (day - firstBox)+1);
+    $(days[day]).attr('data-date', tempData.format("DD/MM/YYYY"));
     $(days[day]).html((day - firstBox)+1);
+    tempData.add(1, "day");
   }
   $("div.calDay").on("click", (e) => {
     if($(this).hasClass("disabled") == false){
-      buildForm();
+
+      let date = $(e.target).data('date');
+      buildForm(date);
     }
   });
 }
 
 
-function buildForm(){
+function buildForm(date){
   let pBody = $(".panel-body");
   pBody.html("");
-  var timeSlots = "<ul class='nav nav-pills'>" +
-                    "<li class='active'><a href='#'>8:00</a></li>" +
-                    "<li><a href='#'>10:00</a></li>" +
-                    "<li><a href='#'>12:00</a></li>" +
-                    "<li><a href='#'>2:00</a></li>" +
+  var timeSlots = "<ul class='nav nav-pills tSlots'>" +
+                    "<li data-slot='0' class='active'><a href='#'>8:00</a></li>" +
+                    "<li data-slot='1'><a href='#'>10:00</a></li>" +
+                    "<li data-slot='2'><a href='#'>12:00</a></li>" +
+                    "<li data-slot='3'><a href='#'>2:00</a></li>" +
                   "</ul><br>";
   pBody.append("Please select a time and fill out the contact form. <hr>");
   pBody.append("<label>Available Times: </label>");
   pBody.append(timeSlots);
 
-  pBody.append("<form action='/newAppointment' method='POST'>" +
-                  "<input type='hidden' name='apt[timeSlot]' value='0'>" +
-                  "<input type='hidden' name='apt[date]' value='DYNAMIC'>" +
+  $('ul.tSlots li').on("click", (e) => {
+    let tmp = $(e.target).parent()
+    $('ul.tSlots li.active').removeClass('active');
+    $(tmp).addClass("active");
+    $("#aptSlot").val($(tmp).data('slot'));
+  });
+
+  pBody.append("<form id='aptFrm' action='/newAppointment' method='POST'>" +
+                  "<input id='aptSlot' type='hidden' name='apt[timeSlot]' value='0'>" +
+                  "<input type='hidden' name='apt[date]' value='" + date + "'>" +
                   "<div class='form-group'>" +
                     "<label> Owner's Name: </label>" +
                     "<input class='form-control' type='text' name='apt[owner]'>" +
@@ -88,6 +98,9 @@ function buildForm(){
                     "<label> Email: </label>" +
                     "<input class='form-control' type='text' name='apt[email]'>" +
                   "</div><textarea class='form-control' name='apt[about]' placeholder='Notes. . .'></textarea>");
-    pBody.append("<br><input type='submit' class='btn btn-primary' value='Submit'></form><br><br>");
-
+    pBody.append("<br><input id='aptSubmit' type='submit' class='btn btn-primary' value='Submit'></form><br><br>");
+    $('#aptSubmit').on('click', (e) => {
+      $('#aptFrm').submit();
+      pBody.html("Thank you, we will be in touch to confirm your appointment. . . <hr>");
+    });
 }

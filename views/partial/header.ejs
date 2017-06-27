@@ -41,3 +41,15 @@
           </div><!-- / nav container -->
         </nav>
       </div>
+      <div class='container'>
+          <% if(error && error.length > 0) { %>
+              <div class='alert alert-danger'>
+                 <span class='glyphicon glyphicon-exclamation-sign'></span> <%= error %>
+              </div>
+          <% } %>
+          <% if(info && info.length > 0) { %>
+              <div class='alert alert-info'>
+                 <span class='glyphicon glyphicon-ok-sign'></span> <%= info %>
+              </div>
+          <% } %>
+      </div>  
