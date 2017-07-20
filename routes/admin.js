@@ -11,3 +11,11 @@ exports.cp = function (req, res, next) {
   //TODO: load data for cp
   res.render("admin/index");
 };
+
+exports.calPage = function (req, res, next) {
+  res.render("admin/calendar");
+};
+
+exports.gallery = function (req, res, next) {
+  res.render("admin/gallery");
+};

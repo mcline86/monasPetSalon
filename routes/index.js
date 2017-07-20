@@ -4,7 +4,7 @@ var Appointment = require("../models/appointment"),
 
 
 exports.newAppointment = function (req, res, next) {
-  Appointment.find({date: req.body.apt.date}, function(err, apts) {
+  Appointment.find({date: req.body.apt.date}, function (err, apts) {
     if(err) {
       req.flash("error", err.toString());
       res.redirect("back");
@@ -20,7 +20,7 @@ exports.newAppointment = function (req, res, next) {
         res.redirect("back");
       }
       else {
-        Appointment.create(req.body.apt, function(err, apt) {
+        Appointment.create(req.body.apt, function (err, apt) {
           if(err) {
             req.flash("error", err.toString());
             res.redirect("back");
@@ -33,5 +33,16 @@ exports.newAppointment = function (req, res, next) {
       }
     }
   });
+};
 
+exports.updateAppointment = function (req, res, next) {
+  Appointment.findByIfAndUpdate(req.params.id, req.body.apt, function (err, apt) {
+    if(err) {
+      req.flash("error", err.toString());
+      res.redirect("back");
+    }
+    else {
+
+    }
+  });
 };

@@ -1,8 +1,6 @@
 
 buildCal()
 
-
-
 function buildCal (){
   let cal = $("#calBox");
   cal.html("<h1>" +moment().format("MMM YYYY") + "</h1>");
@@ -19,40 +17,40 @@ function buildCal (){
     for(let col = 0; col < 7; col++){
       let Day;
         if(col == 0) {
-          Day = "<div class='calDay calLeft disabled'> &nbsp; </div>";
+          Day = "<div class='calDay calLeft disabled'> &nbsp; </div>";  // if is on left add calLeft
           if(row == 5){
-            Day = "<div class='calDay calLeft botLeft disabled'> &nbsp; </div>";
+            Day = "<div class='calDay calLeft botLeft disabled'> &nbsp; </div>"; // if is at bottom left
           }
         }
         else {
           Day = "<div class='calDay disabled'> &nbsp; </div>";
         }
         cal.append(Day);
-        //console.log("[ " + row + " : " + col + " ]");
-    }
-  }
-
+    } // col for loop
+  }// row for loop
   fillCal();
 }
 
 function fillCal(){
   let days = $('div.calDay');
-  let today = moment(new Date()).date();
-  let start = moment().startOf('month').date();
-  let end = moment().endOf('month').date();
+  let today = moment(new Date());
+  let current = moment(new Date()).date(1);
   let firstBox = moment().startOf('month').day();
-  let tempData = moment(new Date()).set({date: 1});
-  for(let day = firstBox; day < end + firstBox; day++){
-    if((day - firstBox)+1 == today){   $(days[day]).addClass("today");   }
-    $(days[day]).removeClass('disabled');
-    $(days[day]).attr('data-date', tempData.format("DD/MM/YYYY"));
-    $(days[day]).html((day - firstBox)+1);
-    tempData.add(1, "day");
+  current.add((firstBox * -1), 'd');
+  for(let day = 0; day < days.length; day++){
+    if(current.isSame(today)){   $(days[day]).addClass("today");   }
+    if(current.month() == today.month()) {
+      $(days[day]).removeClass("disabled");
+      $(days[day]).attr('data-date', current.format("MM/DD/YYYY"));
+    }
+    $(days[day]).html(current.date());
+    current.add(1, "day");
   }
   $("div.calDay").on("click", (e) => {
-    if($(this).hasClass("disabled") == false){
-
+    if($(e.target).hasClass("disabled") == false){
+      $("div.calDay").removeClass("selected");
       let date = $(e.target).data('date');
+      $(e.target).addClass("selected");
       buildForm(date);
     }
   });
@@ -61,12 +59,13 @@ function fillCal(){
 
 function buildForm(date){
   let pBody = $(".panel-body");
+  $('.panel-title').find("span").html(moment(date, "MM/DD/YYYY").format("MMMM Do, YYYY"));
   pBody.html("");
   var timeSlots = "<ul class='nav nav-pills tSlots'>" +
-                    "<li data-slot='0' class='active'><a href='#'>8:00</a></li>" +
-                    "<li data-slot='1'><a href='#'>10:00</a></li>" +
-                    "<li data-slot='2'><a href='#'>12:00</a></li>" +
-                    "<li data-slot='3'><a href='#'>2:00</a></li>" +
+                    "<li data-slot='0' class='active'><a href='#'>8:00a</a></li>" +
+                    "<li data-slot='1'><a href='#'>10:00a</a></li>" +
+                    "<li data-slot='2'><a href='#'>12:00p</a></li>" +
+                    "<li data-slot='3'><a href='#'>2:00p</a></li>" +
                   "</ul><br>";
   pBody.append("Please select a time and fill out the contact form. <hr>");
   pBody.append("<label>Available Times: </label>");
@@ -81,6 +80,7 @@ function buildForm(date){
 
   pBody.append("<form id='aptFrm' action='/newAppointment' method='POST'>" +
                   "<input id='aptSlot' type='hidden' name='apt[timeSlot]' value='0'>" +
+                  "<input type='hidden' name=apt[status] value='pending'>" +
                   "<input type='hidden' name='apt[date]' value='" + date + "'>" +
                   "<div class='form-group'>" +
                     "<label> Owner's Name: </label>" +

@@ -73,6 +73,7 @@ app.post("/newAppointment", basic.newAppointment);
 //===================================================
 
 app.get("/admin",isLoggedIn, admin.cp);
+
 app.post("/login", passport.authenticate("local",
   {
     successRedirect: "/admin",
@@ -81,6 +82,8 @@ app.post("/login", passport.authenticate("local",
   }), function(req, res) { //callback not used as passport will redirect
 
 });
+
+app.get("/admin/calendar", admin.calPage); //admin calendar route
 
 app.get("/logout", function(req, res) {
   req.logout();

@@ -8,7 +8,9 @@ var apptSchema = new mongoose.Schema({
   email: String,
   timeSlot: Number,
   date: String,
+  status: String,
   about: String
+
 });
 
 module.exports = mongoose.model("Appointment", apptSchema);

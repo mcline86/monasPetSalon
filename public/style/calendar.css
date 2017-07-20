@@ -8,6 +8,10 @@ h1 {
  margin: 0;
 }
 
+h1 span {
+  font-size: .75em;
+}
+
 .calHead {
  width: 14.28%;
  float:left;
@@ -39,6 +43,13 @@ h1 {
  transition: all .5s;
 }
 
+.calDay.selected {
+  background: #8663b4;
+  color: #fff;
+
+}
+
+
 .botLeft {
   border-radius: 0 0 0 10px;
 }
@@ -63,6 +74,8 @@ h1 {
 
 .calDay.disabled:hover {
  cursor:not-allowed;
+ background-color: #ccc;
+ color: #8663b4;
 }
 
 .calLeft {
@@ -89,6 +102,10 @@ h1 {
 }
 .panel-title {
   font-size: 2em;
+}
+.panel-title span {
+  font-size: .75em;
+  padding-top: 5px;
 }
 
 hr {
