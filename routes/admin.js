@@ -19,3 +19,7 @@ exports.calPage = function (req, res, next) {
 exports.gallery = function (req, res, next) {
   res.render("admin/gallery");
 };
+
+exports.pending = function(req, res, next) {
+  res.render("admin/pending");
+};

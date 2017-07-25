@@ -1,0 +1,40 @@
+<% include ../partial/aheader %>
+
+<div class="container">
+  <div id='pendList' class="col-md-6">  </div>
+  <div class="col-md-6">
+    <form class="form" action="admin/cal/new" method="post">
+      <select class="form-control col-md-6" name="apt[status]">
+        <option value="0">pending</option>
+        <option value="1">active</option>
+        <option value="2">canceled</option>
+      </select>
+      <input type="hidden" name="date" value="EJS OBJECT">
+      <div class="form-group">
+        <label for="Owner">Owner</label>
+        <input class="form-control" type="text" name="apt[pet]" value="">
+      </div>
+      <div class="form-group">
+        <label for="pet">Pet's Name</label>
+        <input class="form-control" type="text" name="apt[breed]" value="">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input class="form-control" type="text" name="apt[phone]" value="">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" type="text" name="apt[email]" value="">
+      </div>
+    </form>
+    <div class="form-group">
+      <label for="notes">Notes: </label>
+      <textarea class="form-control" name="apt[about]" rows="8" cols="80"></textarea>
+    </div>
+  </div>
+</div>
+
+
+
+
+<% include ../partial/footer %>

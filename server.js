@@ -84,6 +84,7 @@ app.post("/login", passport.authenticate("local",
 });
 
 app.get("/admin/calendar", admin.calPage); //admin calendar route
+app.get("/admin/pending", admin.pending); //appointment manager
 
 app.get("/logout", function(req, res) {
   req.logout();
