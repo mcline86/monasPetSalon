@@ -12,7 +12,7 @@ exports.newAppointment = function (req, res, next) {
     else {
       var sched = 0;
       var slot = req.body.apt.timeslot;
-      for(let i = 0; i < apts.length; i++) {
+      for(var i = 0; i < apts.length; i++) {
         if(apts[i].timeslot == slot) sched++;
       }
       if(sched > 1) {
