@@ -10,8 +10,8 @@ exports.newAppointment = function (req, res, next) {
       res.redirect("back");
     }
     else {
-      let sched = 0;
-      let slot = req.body.apt.timeslot;
+      var sched = 0;
+      var slot = req.body.apt.timeslot;
       for(let i = 0; i < apts.length; i++) {
         if(apts[i].timeslot == slot) sched++;
       }
