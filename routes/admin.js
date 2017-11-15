@@ -78,7 +78,6 @@ exports.upload = function(req, res) {
 
   form.parse(req, function(err, fields, files) {
   });
-
   res.send("finished");
 };
 
@@ -89,6 +88,22 @@ exports.getImageInfo = function(req, res){
       console.log(err);
     }else {
       res.json(image);
+    }
+  });
+};
+
+exports.updateImage = function(req, res){
+  let formData = req.body.image;
+  Image.findByIdAndUpdate(req.params.id, req.body.image, function(err, image) {
+    if(err) {
+      res.redirect("/admin");
+    }else {
+      image.inSlider = false;
+      image.inGallery = false;
+      if(formData.inSlider) { image.inSlider = true;  }
+      if(formData.inGallery){ image.inGallery = true; }
+      image.save();
+      res.redirect("/admin/gallery");
     }
   });
 };

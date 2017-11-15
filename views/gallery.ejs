@@ -3,16 +3,47 @@
   $('#navGallery').addClass('active')
 </script>
 
+
+
 <div class="container">
   <% if(images){ images.forEach(function(image){ %>
     <div class="imgBox pull-left">
-      <a href="#" class='imageLink'
-        data-ID= "<%= image._id %>">
-        <img src="<%= image.thumb %>">
+      <a href="#" class='imageLink'>
+        <img src="<%= image.thumb %>"
+        data-id= "<%= image._id %>">
       </a>
     </div>
   <% })}; %>
 </div>
 
+<div class="modal fade view-image-modal" tabindex="-1" role="dialog" aria-labelledby="picDisplay">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Change Me</h4>
+      </div>
+      <img id='modalImg' class="preview thumbnail" src="" style="margin: 15px auto;width: 85%;">
+      <div class="tagline">
+        TAGLINE
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('.imageLink').on('click', function(e){
+  let id = $(e.target).data("id");
+  $.ajax({url: "/image/" + id, success: function(data){
+    let modal = $('.view-image-modal');
+    modal.find(".modal-title").html(data.name);
+    $("#imgEdit-button").data('id', data._id);
+    $("#imgDelete-button").data('id', data._id);
+    $('#modalImg').attr("src", data.file);
+    $('.tagline').html(data.about);
+    $('.view-image-modal').modal().show();
+  }});
+});
+</script>
 
 <% include partial/footer %>

@@ -9,12 +9,13 @@
 <% if(error) { %>
   <div class='flash error'> <%= error.toString() %> </div>
 <% } %>
+<% if(images.length > 0) { %>
     <div id='slider'>
       <img id='slide1' />
       <img id='slide2' />
       <div class='controls'> </div>
     </div>
-
+<% } %>
     <div class="row">
       <div class="col-md-4"></div>
       <div class="infoBox col-md-7">
@@ -54,9 +55,20 @@
 
 
 <script src='script/slider.js'></script>  <!--  SlideShow script   -->
+
 <script type="text/javascript">
+var imgArray = [];
+  <% images.forEach(function(image){ %>
+        imgArray.push("<%=image.file%>");
+  <% }) %>
+
+  console.log(imgArray);
+  sliderInit(imgArray);
+
+
   $("#cpBtn").on("click", (e) => {
     $("#cpModal").modal("toggle");
   });
 </script>
+
 <% include partial/footer %>

@@ -79,3 +79,38 @@ body {
   border-radius: 10px;
   padding: 15px;
 }
+
+.imgBox {
+  margin: 7px;
+  padding: 5px;
+  border-radius: 5px;
+  transition: all 0.5s;
+}
+
+.imgBox img{
+  width: 200px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #444;
+  transition: all 0.25s;
+}
+
+.imgBox:hover {
+  box-shadow: 0 0 7px 3px #8663b4;
+}
+
+.imgBox:hover img {
+  box-shadow: none;
+}
+
+.tagline {
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #8663b4;
+}
+
+h4.modal-title {
+  text-align: center;
+  font-size: 1.5em;
+}

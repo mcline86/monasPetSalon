@@ -1,28 +1,27 @@
-var images = [  //List of images  (maybe grabbed from DB later to allow admin to change)
-  "Banner.jpg",
-  "Mona1.jpg",
-  "Mona2.jpg",
-  "Mona3.jpg"
-];
+var images = [];
 
 var currentSlide = 0;
 const pause = 5000; //pause between slides
 var timer;
-setSlide(0);
-buildControls();
-slideLoop();
+
+
+function sliderInit(array){
+  images = array;
+  setSlide(0);
+  if(array.length > 1){ buildControls(); }
+  slideLoop();
+}
 
 
 function setSlide (i) {  //set slide as current
   var paws = $('.paw');            // Grab all paws
   paws.removeClass('current');     // clear current class from all
   $(paws[i]).addClass('current');  // set current class on new slide paw
-
   //currentSlide = i;
   $('#slide2').hide();
-  $('#slide2').attr('src', 'images/' + images[i]);
+  $('#slide2').attr('src', images[i]);
   $('#slide2').fadeIn(1400, function() {
-    $('#slide1').attr('src', 'images/' + images[i]);
+    $('#slide1').attr('src', images[i]);
     $('#slide2').hide();
   });
 }

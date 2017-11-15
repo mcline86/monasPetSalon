@@ -46,7 +46,14 @@ passport.serializeUser(Logon.serializeUser());
 passport.deserializeUser(Logon.deserializeUser());
 
 app.get("/", function (req, res) {
-    res.render("index");
+  Image.find({inSlider: true}, function(err, images) {
+    if(err){
+      console.log(err);
+    }else {
+      console.log(images);
+      res.render("index", {images: images});
+    }
+  });
 });
 
 app.get("/calendar", function (req, res) {
@@ -58,7 +65,7 @@ app.get("/about", function (req, res) {
 });
 
 app.get("/gallery", function (req, res) {
-  Image.find({}, function(err, images) {
+  Image.find({inGallery: true}, function(err, images) {
     if(err){
       console.log(err);
     }else {
@@ -91,6 +98,8 @@ app.post("/login", passport.authenticate("local",
 });
 
 app.post("/admin/upload", admin.upload);
+
+app.post("/admin/updateImage/:id", isLoggedIn, admin.updateImage);
 
 app.get("/admin/calendar", admin.calPage); //admin calendar route
 app.get("/admin/pending", admin.pending); //appointment manager
