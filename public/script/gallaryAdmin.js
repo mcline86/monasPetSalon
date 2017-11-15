@@ -18,7 +18,7 @@ function hook(element){
         success: function(data) {
           console.log('upload : ' + data);
           $('#upload-bar').hide();
-          location.reload();
+
         },
         xhr: function() {
           var xhr = new XMLHttpRequest();
@@ -34,6 +34,9 @@ function hook(element){
             }
           }, false);
           return xhr;
+        },
+        complete: function(){
+          location.reload();
         }
       });
     }
