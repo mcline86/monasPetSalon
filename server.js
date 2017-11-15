@@ -96,7 +96,7 @@ app.get("/logout", function(req, res) {
 //==================   Listening   ==================
 //===================================================
 
-app.listen("8080",  function () {
+app.listen("80",  function () {
    console.log("The Server has Started!!");
    Logon.findOne({username: "mike"}, function(err, usr) {
      if(err){
