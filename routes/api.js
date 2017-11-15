@@ -18,3 +18,16 @@ exports.getPending = function (req, res, next) {
 exports.getApt = function (req, res, next) {
 
 };
+
+
+exports.getImageInfo = function(req, res, next) {
+  Image.findById(req.params.id, function(err, image){
+    if(err){
+      console.log(err);
+      return next();  // ??
+    }else {
+      res.json(image);
+      return next();
+    }
+  });
+};

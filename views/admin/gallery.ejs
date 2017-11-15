@@ -5,10 +5,11 @@
 <style media="screen">
   .imgBox {
     margin: 10px;
+    border-radius: 5px;
   }
 
   .imgBox:hover {
-    box-shadow: 0 0 7px 3px #A44;
+    box-shadow: 0 0 7px 3px #8663b4;
   }
 </style>
 
@@ -22,14 +23,27 @@
 <div class="container">
   <% if(images){ images.forEach(function(image){ %>
     <div class="imgBox pull-left">
-      <a href="#" class='imageLink'
-        data-ID= "<%= image._id %>">
-        <img src="<%= image.thumb %>">
+      <a href="#" class='imageLink'>
+        <img src="<%= image.thumb %>"
+        data-id= "<%= image._id %>">
       </a>
     </div>
   <% })}; %>
 </div>
 
+<div class="modal fade view-image-modal" tabindex="-1" role="dialog" aria-labelledby="picDisplay">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button id='imgEdit-button' data-id="CHANGE-ME" data-toggle='modal' data-target=".edit-image-modal"><span class='glyphicon glyphicon-pencil'></span></button>
+        <button id='imgDelete-button' data-id="CHANGE-ME"><span class='glyphicon glyphicon-trash'></span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Change Me</h4>
+      </div>
+      <img id='modalImg' class="preview thumbnail" src="" style="margin: 15px auto;width: 85%;">
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
   $('#upload-input').hide();
@@ -38,6 +52,25 @@
   $("#upBtn").on("click", function() {
     $('#upload-input').click();
   });
+
+
+  $('.imageLink').on('click', function(e){
+    let id = $(e.target).data("id");
+    $.ajax({url: "/image/" + id, success: function(data){
+      let modal = $('.view-image-modal');
+      modal.find(".modal-title").html(data.name);
+      $("#imgEdit-button").data('id', data._id);
+      $("#imgDelete-button").data('id', data._id);
+      $('#modalImg').attr("src", data.file);
+      $('.view-image-modal').modal().show();
+    }});
+  });
+
+  function waitaminute() {
+
+
+  }
+
 </script>
 
 <% include ../partial/footer %>

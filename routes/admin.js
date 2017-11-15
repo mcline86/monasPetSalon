@@ -81,3 +81,14 @@ exports.upload = function(req, res) {
 
   res.send("finished");
 };
+
+
+exports.getImageInfo = function(req, res){
+  Image.findOne({_id: req.params.id}, function(err, image){
+    if(err){
+      console.log(err);
+    }else {
+      res.json(image);
+    }
+  });
+};
