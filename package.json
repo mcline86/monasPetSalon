@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcline86/monasPetSalon"
+  },
   "author": "Michael Cline",
   "license": "ISC",
   "dependencies": {
@@ -14,6 +18,9 @@
     "ejs": "^2.5.6",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
+    "formidable": "^1.1.1",
+    "gm": "^1.23.0",
+    "lodash": "^4.17.4",
     "method-override": "^2.3.9",
     "mongoose": "^4.10.2",
     "passport": "^0.3.2",

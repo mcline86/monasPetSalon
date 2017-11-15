@@ -4,6 +4,7 @@ var imageSchema = new mongoose.Schema({
   name: String,
   about: String,
   file: String,
+  thumb: String,
   inSlider: Boolean,
   inGallery: Boolean
 });

@@ -1,0 +1,43 @@
+<% include ../partial/aheader %>
+
+<input id='upload-input' type='file' multiple='multiple'>
+
+<style media="screen">
+  .imgBox {
+    margin: 10px;
+  }
+
+  .imgBox:hover {
+    box-shadow: 0 0 7px 3px #A44;
+  }
+</style>
+
+
+<div class="container">
+  <div id='upBtn' class="btn btn-lg btn-primary pull-right">
+    Upload
+  </div>
+</div>
+
+<div class="container">
+  <% if(images){ images.forEach(function(image){ %>
+    <div class="imgBox pull-left">
+      <a href="#" class='imageLink'
+        data-ID= "<%= image._id %>">
+        <img src="<%= image.thumb %>">
+      </a>
+    </div>
+  <% })}; %>
+</div>
+
+
+<script type="text/javascript">
+  $('#upload-input').hide();
+  hook('#upload-input');
+
+  $("#upBtn").on("click", function() {
+    $('#upload-input').click();
+  });
+</script>
+
+<% include ../partial/footer %>

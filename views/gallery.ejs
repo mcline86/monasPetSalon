@@ -3,7 +3,16 @@
   $('#navGallery').addClass('active')
 </script>
 
-Gallery
+<div class="container">
+  <% if(images){ images.forEach(function(image){ %>
+    <div class="imgBox pull-left">
+      <a href="#" class='imageLink'
+        data-ID= "<%= image._id %>">
+        <img src="<%= image.thumb %>">
+      </a>
+    </div>
+  <% })}; %>
+</div>
 
 
 <% include partial/footer %>

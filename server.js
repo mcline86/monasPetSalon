@@ -58,8 +58,15 @@ app.get("/about", function (req, res) {
 });
 
 app.get("/gallery", function (req, res) {
-  res.render("gallery");
+  Image.find({}, function(err, images) {
+    if(err){
+      console.log(err);
+    }else {
+      res.render("gallery", {images: images});
+    }
+  });
 });
+
 
 
 //===================================================
@@ -83,8 +90,12 @@ app.post("/login", passport.authenticate("local",
 
 });
 
+app.post("/admin/upload", admin.upload);
+
 app.get("/admin/calendar", admin.calPage); //admin calendar route
 app.get("/admin/pending", admin.pending); //appointment manager
+
+app.get("/admin/gallery", admin.gallery);
 
 app.get("/logout", function(req, res) {
   req.logout();
