@@ -1,9 +1,48 @@
 <% include ../partial/aheader %>
+<style media="screen">
+  #pageBack {
+    background-color: #fff;
+    margin-top: -60px;
+    padding-top: 85px;
+    min-height: 95%;
+    box-shadow: 0px 7px 10px rgba(50, 50, 50, .55);
+  }
+</style>
 
-<div class="container">
-  <div class="col-md-4">  </div>
-  Admin Only
+
+<div id='pageBack' class="container" >
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        Images
+      </div>
+      <div class="card-body">
+        <div class="card-text">
+          <ul>
+            <li>Space used: <strong><span id='imgSOD'></span></strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+
+<script type="text/javascript">
+var imagesSizeOnDisk;
+  $(document).ready(function() {
+    $.ajax({
+      url: "/admin/gallerySOD",
+      success: function(data){
+        imagesSizeOnDisk = data / 1024;
+        $('#imgSOD').html(imagesSizeOnDisk.toFixed(2) + "KB");
+      },
+      complete: function(){
+
+      }
+    });
+  });
+
+</script>
 
 <% include ../partial/footer %>

@@ -8,9 +8,9 @@
 
 
 <div class="container">
-  <div id='upBtn' class="btn btn-lg btn-default pull-right">
+  <a id='upBtn' class="btn btn-lg btn-default pull-right">
     Upload
-  </div>
+  </a>
 </div>
 
 <div class="container">
@@ -101,8 +101,11 @@ $('#delImageBtn').on('click', function(e){
     url: "/admin/deleteImage/" + id,
     success: function(data){
       console.log("image deleted");
+    },
+    complete: function(){
+      location.reload();
     }
-  })
+  });
 });
 
 </script>

@@ -9,10 +9,12 @@ var Appointment   = require("../models/appointment"),
     var formidable = require('formidable');
     var path       = require('path');
     var fs         = require('fs');
+    var async      = require('async');
+    var util  = require('util');
+    var spawn = require('child_process').spawn;
 
 
 exports.cp = function (req, res, next) {
-  //TODO: load data for cp
   res.render("admin/index");
 };
 
@@ -123,3 +125,41 @@ exports.removeImage = function(req, res){
     }
   });
 };
+
+
+exports.GallerySizeOnDisk = function(req, res, next){
+  let u = path.join(__dirname, "../public/images/uploads/");
+  let t = path.join(__dirname, "../public/images/thumbnails/");
+  var total = 0;
+  getTotalSize(u, function(tot){
+    total = tot;
+    getTotalSize(t, function(thumbTot){
+      res.json(total + thumbTot);
+    });
+  });
+};
+
+function getTotalSize(folder, cb){
+  let fileArray = fs.readdirSync(folder, function(err, files) {
+    if(err) throw err;
+    return files;
+  });
+  console.log("Found ", fileArray.length, " files. . . " );
+
+  var totalSizeBytes = 0;
+  var sizeOfFile = function(index){
+    console.log("Checking: ", fileArray[index]);
+    fs.stat(folder + fileArray[index], function(err, stats){
+      if(err) throw err;
+      if(stats.isFile()) { totalSizeBytes += stats.size; }
+      console.log("Size: ", stats.size);
+      if(index == fileArray.length - 1){
+        return cb(totalSizeBytes);
+      }else {
+        return sizeOfFile(index + 1);
+        console.log("moving to: ", fileArray[index]);
+      }
+    });
+  };
+  sizeOfFile(0);
+}

@@ -50,7 +50,6 @@ app.get("/", function (req, res) {
     if(err){
       console.log(err);
     }else {
-      console.log(images);
       res.render("index", {images: images});
     }
   });
@@ -101,6 +100,8 @@ app.post("/admin/upload", admin.upload);
 
 app.post("/admin/updateImage/:id", isLoggedIn, admin.updateImage);
 
+app.get("/admin/gallerySOD", admin.GallerySizeOnDisk);
+
 app.get("/admin/calendar", admin.calPage); //admin calendar route
 app.get("/admin/pending", admin.pending); //appointment manager
 
@@ -110,7 +111,7 @@ app.get("/admin/deleteImage/:id", isLoggedIn, admin.removeImage);
 
 app.get("/logout", function(req, res) {
   req.logout();
-  res.render("index");
+  res.redirect("/");
 });
 
 
