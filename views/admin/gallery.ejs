@@ -58,8 +58,9 @@
               </label>
             </div>
           </div>
-
+          <div id='delImageBtn' data-id='CHANGEME' class="btn btn-danger pull-right"> Delete </div>
           <button type="submit" class='btn btn-success pull-right' name="button">Save</button>
+
         </form>
       </div>
     </div>
@@ -84,7 +85,7 @@
       $("#imgEdit-button").data('id', data._id);
       $("#imgDelete-button").data('id', data._id);
       $('#modalImg').attr("src", data.file);
-
+      $('#delImageBtn').data('id', data._id);
       $('#imageNameInput').val(data.name);
       $('#imageAboutInput').val(data.about);
       if(data.inSlider){ $('#imageSliderCheck').prop("checked", true);}
@@ -94,10 +95,15 @@
     }});
   });
 
-  function waitaminute() {
-
-
-  }
+$('#delImageBtn').on('click', function(e){
+  let id = $(e.target).data("id");
+  $.ajax({
+    url: "/admin/deleteImage/" + id,
+    success: function(data){
+      console.log("image deleted");
+    }
+  })
+});
 
 </script>
 

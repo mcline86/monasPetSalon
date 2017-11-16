@@ -107,3 +107,19 @@ exports.updateImage = function(req, res){
     }
   });
 };
+
+exports.removeImage = function(req, res){
+  var ID = req.params.id;
+  Image.findOne({_id: ID}, function(err, img){
+    if(err){
+      console.log(err);
+    } else {
+      let publicDir = path.join(__dirname, "../public");
+
+      fs.unlinkSync(publicDir + img.file);
+      fs.unlinkSync(publicDir + img.thumb);
+      Image.remove({_id: ID}, function(err){  if(err){ console.log(err); }  });
+      res.redirect("/admin");
+    }
+  });
+};

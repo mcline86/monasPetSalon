@@ -36,7 +36,7 @@ function hook(element){
           return xhr;
         },
         complete: function(){
-          location.reload();
+          window.location = "/admin";
         }
       });
     }

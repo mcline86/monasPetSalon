@@ -106,10 +106,14 @@ app.get("/admin/pending", admin.pending); //appointment manager
 
 app.get("/admin/gallery", admin.gallery);
 
+app.get("/admin/deleteImage/:id", isLoggedIn, admin.removeImage);
+
 app.get("/logout", function(req, res) {
   req.logout();
   res.render("index");
 });
+
+
 
 
 //===================================================
@@ -117,7 +121,7 @@ app.get("/logout", function(req, res) {
 //===================================================
 
 app.listen("80",  function () {
-   console.log("The Server has Started!!");
+   console.log(__dirname);
    Logon.findOne({username: "mike"}, function(err, usr) {
      if(err){
        console.log("err");
