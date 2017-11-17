@@ -1,35 +1,59 @@
 <% include ../partial/aheader %>
-<style media="screen">
-  #pageBack {
-    background-color: #fff;
-    margin-top: -60px;
-    padding-top: 85px;
-    min-height: 95%;
-    box-shadow: 0px 7px 10px rgba(50, 50, 50, .55);
-  }
-</style>
 
 
 <div id='pageBack' class="container" >
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
-        Images
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Gallery Information:
+        </div>
+        <div class="card-body">
+            <dl class='row'>
+              <dt class='col-md-6'>Total Images: </dt>
+              <dd class='col-md-6 text-right'><span id='imgTot'>[Loading]</span></dd>
+              <dt class='col-md-6'>In SlideShow: </dt>
+              <dd class='col-md-6 text-right'><span id='imgSlide'>[Loading]</span></dd>
+              <dt class='col-md-6'>In Gallery: </dt>
+              <dd class='col-md-6 text-right'><span id='imgGallery'>[Loading]</span></dd>
+              <dt class='col-md-6'>Space on Disk: </dt>
+              <dd class='col-md-6 text-right'><span id='imgSOD'>[Loading]</span></dd>
+            </dl>
+            <div class="card-text text-right">
+              <button type="button" class="btn btn-outline-primary">Gallery</button>
+            </div>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="card-text">
-          <ul>
-            <li>Space used: <strong><span id='imgSOD'></span></strong></li>
-          </ul>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Appointment Information:
+        </div>
+        <div class="card-body">
+          <dl class='row'>
+            <dt class='col-md-6'>Today's : </dt>
+            <dd class='col-md-6 text-right'>[Loading]</dd>
+            <dt class='col-md-6'>Open Requests:</dt>
+            <dd class='col-md-6 text-right'>[Loading]</dd>
+            <dt class='col-md-6'>Appointments:</dt>
+            <dd class='col-md-6 text-right'>[Loading]</dd>
+          </dl>
+          <div class="card-text text-right">
+            <button class="btn btn-outline-primary" type="button" name="button">Schedule</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  </div>
+
 
 
 <script type="text/javascript">
 var imagesSizeOnDisk;
+var images = [];
   $(document).ready(function() {
     $.ajax({
       url: "/admin/gallerySOD",
@@ -41,8 +65,31 @@ var imagesSizeOnDisk;
 
       }
     });
+
+    $.ajax({
+      url: "/image/all",
+      success: function(data){
+        parseImageData(data);
+      }
+    });
+
   });
 
+
+  function parseImageData(array){
+    var inGallery = [];
+    var inSlideShow = [];
+    array.forEach(function(img){
+      if(img.inGallery) inGallery.push(img);
+      if(img.inSlider) inSlideShow.push(img);
+    });
+
+    $('#imgTot').html(inGallery.length + inSlideShow.length);
+    $('#imgGallery').html(inGallery.length);
+    $('#imgSlide').html(inSlideShow.length);
+  }
+
+  $('.nav-link').eq(0).addClass('active');
 </script>
 
 <% include ../partial/footer %>

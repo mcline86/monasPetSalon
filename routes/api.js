@@ -31,3 +31,13 @@ exports.getImageInfo = function(req, res, next) {
     }
   });
 };
+
+exports.getAllImages = function(req, res, next){
+  Image.find({}, function(err, images){
+    if(err){
+      console.log(err);
+    }else {
+      res.json(images);
+    }
+  });
+};

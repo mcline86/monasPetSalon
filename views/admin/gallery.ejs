@@ -7,13 +7,11 @@
 </style>
 
 
-<div class="container">
-  <a id='upBtn' class="btn btn-lg btn-default pull-right">
+<div id='pageBack' class="container">
+  <span id='upBtn' class="btn btn-outline-primary btn-sm pull-right">
     Upload
-  </a>
-</div>
-
-<div class="container">
+  </span>
+  <div id='galleryScrollBox'>
   <% if(images){ images.forEach(function(image){ %>
     <div class="imgBox pull-left">
       <a href="#" class='imageLink'>
@@ -22,20 +20,24 @@
       </a>
     </div>
   <% })}; %>
+  </div>
 </div>
 
-<div class="modal fade view-image-modal" tabindex="-1" role="dialog" aria-labelledby="picDisplay">
+
+<div class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">Change Me</h4>
+        <h5 class="modal-title">CHANGE ME</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <img id='modalImg' class="preview thumbnail" src="" style="margin: 15px auto;width: 85%;">
-      <div class="imageInfoBox container-fluid">
-        <div class=""><!-- placeholder --></div>
-        <form id='imageInfo' class="col-sm-12" action="admin/updateImage/" method="post">
-          <div class="col-md-10">
+      <div class="modal-body">
+        <img src="" id='modalImg'>
+        <form id='imageInfo' class="row" action="admin/updateImage/" method="post">
+          <div class='col-md-1'></div>
+          <div class="col-md-8">
             <div class="form-group">
               <label>Image Title: </label>
               <input id='imageNameInput' class='form-control' type="text" name="image[name]">
@@ -45,27 +47,32 @@
               <input id='imageAboutInput' class='form-control' type="text" name="image[about]">
             </div>
           </div>
-          <div class="form-group col-sm-2">
-            <label>Options: </label>
-            <div class="checkbox">
-              <label>
-                <input id='imageSliderCheck'  type="checkbox" name="image[inSlider]"> SlideShow
-              </label>
-            </div>
-            <div class="checkbox">
-              <label>
-                <input id='imageGalleryCheck' type="checkbox" name="image[inGallery]"> Gallery
-              </label>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Options: </label>
+              <div class="checkbox">
+                <label>
+                  <input id='imageSliderCheck'  type="checkbox" name="image[inSlider]"> SlideShow
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input id='imageGalleryCheck' type="checkbox" name="image[inGallery]"> Gallery
+                </label>
+              </div>
             </div>
           </div>
-          <div id='delImageBtn' data-id='CHANGEME' class="btn btn-danger pull-right"> Delete </div>
-          <button type="submit" class='btn btn-success pull-right' name="button">Save</button>
-
         </form>
+      </div>
+      <div class="modal-footer">
+        <button id='delImageBtn' type="button" class="btn btn-danger" name="button">Delete</button>
+        <button id='saveImage' type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
+
 
 <script type="text/javascript">
   $('#upload-input').hide();
@@ -75,11 +82,14 @@
     $('#upload-input').click();
   });
 
+  $('#saveImage').on('click', function(e){
+    $('#imageInfo').submit();
+  });
 
   $('.imageLink').on('click', function(e){
     let id = $(e.target).data("id");
     $.ajax({url: "/image/" + id, success: function(data){
-      let modal = $('.view-image-modal');
+      let modal = $('.modal');
       modal.find(".modal-title").html(data.name);
       $('#imageInfo').attr('action', '/admin/updateImage/' + data._id);
       $("#imgEdit-button").data('id', data._id);
@@ -91,7 +101,7 @@
       if(data.inSlider){ $('#imageSliderCheck').prop("checked", true);}
       if(data.inGallery){ $('#imageGalleryCheck').prop("checked", true);}
 
-      $('.view-image-modal').modal().show();
+      $('.modal').modal().show();
     }});
   });
 
@@ -108,6 +118,9 @@ $('#delImageBtn').on('click', function(e){
   });
 });
 
+$('#upBtn')
+
+$('.nav-link').eq(3).addClass('active');
 </script>
 
 <% include ../partial/footer %>

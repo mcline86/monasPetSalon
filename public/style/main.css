@@ -1,3 +1,28 @@
+.modal{
+  transition: all 1s;
+}
+.fade.in {
+  opacity: 1;
+}
+
+.modal.in .modal-dialog {
+  margin-top: 200px;
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-backdrop.fade.in {
+  opacity: 0.6;
+  background-color: #000;
+}
+
+.modal-body img {
+  width: 85%;
+  margin: 15px 7.5%;
+}
+
 #cpBtn {
   position: absolute;
   top: 0;
@@ -7,6 +32,32 @@
 
 }
 
+#galleryScrollBox {
+  width: 101%;
+  height: 700px;
+  overflow-y: auto;
+}
+
+#upBtn {
+  position: absolute;
+  top: 65px;
+  right:20px;
+}
+
+#upBtn:hover {
+  cursor:default;
+  color: #fff;
+}
+
+#pageBack {
+  position: relative;
+  background-color: #fff;
+  margin-top: 0px;
+  padding-top: 100px;
+  min-height: 98%;
+  z-index: 0;
+  box-shadow: 0px 7px 10px rgba(50, 50, 50, .55);
+}
 
 html {
   height: 100%;
@@ -81,7 +132,7 @@ body {
 }
 
 .imgBox {
-  margin: 7px;
+  margin: 5px;
   padding: 5px;
   border-radius: 5px;
   transition: all 0.5s;

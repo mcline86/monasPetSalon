@@ -75,6 +75,8 @@ app.get("/gallery", function (req, res) {
 
 app.get("/image/:id", api.getImageInfo);
 
+app.get("/image/all", api.getAllImages);
+
 //===================================================
 //==============   Appointment Crud     =============
 //===================================================
