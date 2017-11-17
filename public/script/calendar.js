@@ -1,9 +1,26 @@
 
-buildCal()
 
-function buildCal (){
+
+buildCal(moment(new Date()));
+
+var CalendarDate;
+
+function buildCal (calDate){
   let cal = $("#calBox");
-  cal.html("<h1>" +moment().format("MMM YYYY") + "</h1>");
+  CalendarDate = calDate.clone();
+  cal.html("<h1>" + moment(calDate).format("MMMM, YYYY") +
+  "<span id='nextMonth' class='btn btn-outline-primary pull-right'>Next</span>"+
+  "<span id='prevMonth' class='btn btn-outline-primary pull-right'>Prev</span> </h1>");
+
+  if(CalendarDate.add(-1, "M").endOf("month").isBefore(moment(new Date()))){
+    $('#prevMonth').addClass('disabled');
+    CalendarDate.add(1, "M"); //reset CalendarDate Variable
+  }else {
+    $('#prevMonth').removeClass('disabled');
+    CalendarDate.add(1, "M"); //reset CalendarDate Variable
+  }
+
+
   var days = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
   for(let i = 0; i < days.length; i++){
     if(i == 0){
@@ -28,18 +45,20 @@ function buildCal (){
         cal.append(Day);
     } // col for loop
   }// row for loop
-  fillCal();
+
+
+  fillCal(calDate);
 }
 
-function fillCal(){
+function fillCal(calDate){
   let days = $('div.calDay');
   let today = moment(new Date());
-  let current = moment(new Date()).date(1);
-  let firstBox = moment().startOf('month').day();
+  let current = moment(calDate).date(1);
+  let firstBox = moment(calDate).startOf('month').day();
   current.add((firstBox * -1), 'd');
   for(let day = 0; day < days.length; day++){
-    if(current.isSame(today)){   $(days[day]).addClass("today");   }
-    if(current.month() == today.month()) {
+    if(current.isSame(today, "date")){   $(days[day]).addClass("today");   }
+    if(current.month() == calDate.month()) {
       $(days[day]).removeClass("disabled");
       $(days[day]).attr('data-date', current.format("MM/DD/YYYY"));
     }
@@ -54,53 +73,32 @@ function fillCal(){
       buildForm(date);
     }
   });
+
+  $('#nextMonth').on('click', function(e){
+    buildCal(CalendarDate.add(1, "M"));
+    console.log(CalendarDate);
+  });
+
+  $('#prevMonth').on('click', function(e){
+    if(CalendarDate.add(-1, "M").isBefore(moment(new Date()))){
+      buildCal(moment(new Date()));
+    }else{
+      buildCal(CalendarDate);
+    }
+  });
 }
 
 
 function buildForm(date){
-  let pBody = $(".panel-body");
-  $('.panel-title').find("span").html(moment(date, "MM/DD/YYYY").format("MMMM Do, YYYY"));
-  pBody.html("");
-  var timeSlots = "<ul class='nav nav-pills tSlots'>" +
-                    "<li data-slot='0' class='active'><a href='#'>8:00a</a></li>" +
-                    "<li data-slot='1'><a href='#'>10:00a</a></li>" +
-                    "<li data-slot='2'><a href='#'>12:00p</a></li>" +
-                    "<li data-slot='3'><a href='#'>2:00p</a></li>" +
-                  "</ul><br>";
-  pBody.append("Please select a time and fill out the contact form. <hr>");
-  pBody.append("<label>Available Times: </label>");
-  pBody.append(timeSlots);
+  $('#aptDate').val(moment(date).format("MM/DD/YYYY"));
+  $('.new-order').modal().show();
+  $('#dateBox').html(date);
 
-  $('ul.tSlots li').on("click", (e) => {
-    let tmp = $(e.target).parent()
-    $('ul.tSlots li.active').removeClass('active');
-    $(tmp).addClass("active");
-    $("#aptSlot").val($(tmp).data('slot'));
-  });
+  if(date.isBefore(moment(new Date()))) {
+    $('#aptForm').hide();
+  }
 
-  pBody.append("<form id='aptFrm' action='/newAppointment' method='POST'>" +
-                  "<input id='aptSlot' type='hidden' name='apt[timeSlot]' value='0'>" +
-                  "<input type='hidden' name=apt[status] value='pending'>" +
-                  "<input type='hidden' name='apt[date]' value='" + date + "'>" +
-                  "<div class='form-group'>" +
-                    "<label> Owner's Name: </label>" +
-                    "<input class='form-control' type='text' name='apt[owner]'>" +
-                  "</div><div class='form-group col-xs-6'>" +
-                    "<label> Pet's Name: </label>" +
-                    "<input class='form-control' type='text' name='apt[pet]'>" +
-                  "</div><div class='form-group col-xs-6'>" +
-                    "<label> Breed: </label>" +
-                    "<input class='form-control' type='text' name='apt[breed]'>" +
-                  "</div><div class='form-group col-xs-6'>" +
-                    "<label> Phone: </label>" +
-                    "<input class='form-control' type='text' name='apt[phone]'>" +
-                  "</div><div class='form-group col-xs-6'>" +
-                    "<label> Email: </label>" +
-                    "<input class='form-control' type='text' name='apt[email]'>" +
-                  "</div><textarea class='form-control' name='apt[about]' placeholder='Notes. . .'></textarea>");
-    pBody.append("<br><input id='aptSubmit' type='submit' class='btn btn-primary' value='Submit'></form><br><br>");
     $('#aptSubmit').on('click', (e) => {
       $('#aptFrm').submit();
-      pBody.html("Thank you, we will be in touch to confirm your appointment. . . <hr>");
     });
 }

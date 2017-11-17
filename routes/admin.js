@@ -59,6 +59,7 @@ exports.upload = function(req, res) {
         let newName = img._id + '.' + tmp[tmp.length -1];
         img.file = "/images/uploads/" + newName;
         img.thumb = "/images/thumbnails/" + newName;
+        img.inGallery = true;
         img.save();
         fs.rename(file.path, path.join(form.uploadDir, newName), function() {
           gm(path.join(form.uploadDir, newName)).identify(function(err, data) {

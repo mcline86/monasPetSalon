@@ -20,8 +20,8 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="gridSystemModalLabel">Change Me</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <img id='modalImg' class="preview thumbnail" src="" style="margin: 15px auto;width: 85%;">
       <div class="tagline">
@@ -44,6 +44,8 @@ $('.imageLink').on('click', function(e){
     $('.view-image-modal').modal().show();
   }});
 });
+
+$('.nav-link').eq(3).addClass('active');
 </script>
 
 <% include partial/footer %>

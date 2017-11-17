@@ -1,27 +1,32 @@
 <% include partial/header.ejs %>
+<style media="screen">
+  #loading {
+    display:block;
+    padding-top: 180px;
+    font-size: 3em;
+    font-weight: bold;
+    color: #8663b4;
+  }
+</style>
 
-<script type="text/javascript">
-  $('#navHome').addClass('active')
-</script>
-
-
-<div class="container">
+<div id='pageBack' class="container">
 <% if(error) { %>
   <div class='flash error'> <%= error.toString() %> </div>
 <% } %>
 <% if(images.length > 0) { %>
-    <div id='slider'>
+    <div id='slider' class='text-center align-middle'>
+      <span id='loading'>[Loading] </span>
       <img id='slide1' />
       <img id='slide2' />
       <div class='controls'> </div>
     </div>
+<% }else { %>
+  <h1> Please add images to the slider. </h1>
 <% } %>
     <div class="row">
-      <div class="col-md-4"></div>
-      <div class="infoBox col-md-7">
-        <p>
-            Lorem ipsum dolor sit amet, pharetra mauris odio in sociosqu nec sed, primis quam id vivamus, vivamus felis sed vel ligula aliquam ut, luctus sapien at mollis. Ipsum a ante sed voluptate, nec phasellus nec etiam, nam quisque, leo et, sit et. Praesent duis amet semper eros at placerat, vitae cras et, ante mi sodales volutpat vivamus, morbi blandit orci eu eget vel tellus, sed odio venenatis imperdiet vehicula est eget. Et metus luctus cursus lectus tellus tincidunt, vitae rhoncus elementum arcu litora a, risus natoque, tristique nullam, fringilla adipiscing enim sollicitudin a. Eget culpa nibh eu fringilla semper est, lacus enim arcu. Luctus eros donec ante, suspendisse culpa facilisis ut, tortor augue condimentum id, eget sagittis scelerisque. Est vehicula magnis quam luctus commodo nibh, ac consequat, non massa et aliquam at sem. Amet morbi dignissim, wisi quisque in sapien. Fermentum imperdiet molestie, accusamus elit duis dolor maecenas felis, blandit et. In mi, a accumsan amet quisque in sed quis, quis duis sed, malesuada porttitor justo urna cras, cursus nec et pede sit.
-          </p>
+      <div class="col-sm-1"></div>
+      <div class="infoBox col-sm-10">
+        <h3 class='text-center align-bottom'><img src='/images/dogCartoon.png' style="width: 100px;" class='flip'>&nbsp; You and your furry friends are always welcome! &nbsp;<img src='/images/dogCartoon.png' style="width: 100px;"> </h3>
       </div>
     </div>
 <div id='cpBtn'></div>
@@ -31,8 +36,8 @@
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Admin Area</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <p>Please enter your credentials&hellip;</p>
@@ -65,7 +70,7 @@ var imgArray = [];
   console.log(imgArray);
   sliderInit(imgArray);
 
-
+ $('.nav-link').eq(0).addClass('active');
   $("#cpBtn").on("click", (e) => {
     $("#cpModal").modal("toggle");
   });

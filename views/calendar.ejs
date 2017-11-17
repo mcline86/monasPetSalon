@@ -1,38 +1,75 @@
 <% include partial/header %>
 <script type="text/javascript">
-  $('#navCal').addClass('active')
+  $('.nav-link').eq(1).addClass('active');
 </script>
 
 <link rel="stylesheet" href="/style/calendar.css">
 
-<div class="container">
-    <div class="col-md-6">
-      <div class="panel panel-default" id='calPanelInfo'>
-        <div class="panel-heading">
-          <h2 class="panel-title">Appointment Info: <span class='pull-right'></span></h2>
-        </div>
-        <div class="panel-body">
-          <h4 class='text-center'>Please select a date to begin&hellip;</h4>
-          <hr>
+<div id='pageBack' class="container">
+  <div class="row">
+    <div class="col-md-1">
+
+    </div>
+    <div id="calBox" class="col-md-10">
+      <!-- Calendar is built in script  -->
+    </div>
+  </div> <!-- Row End -->
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-md-2">  </div>
+    <div class="col-md-8">
+
           <p> &emsp;After choosing the date you would like to schedule, please choose an appropriate time and provide us with your contact details.
            Once we verify the date/time is available we will contact you to confirm/reschedule. </p>
            <hr>
-           <p>We currently have 4 time slots for appointments and accept 2 pets per time slot.</p>
-           <div class='col-md-3'></div>
-           <ul class='list-group col-md-6'>
-             <li class='list-group-item'>8:00  A.M.</li>
-             <li class='list-group-item'>10:00 A.M.</li>
-             <li class='list-group-item'>12:00 P.M.</li>
-             <li class='list-group-item'>2:00  P.M.</li>
-           </ul>
-        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal new-order" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Appointment &emsp; <span id='dateBox'class='text-muted'></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id='aptFrm' action='/newAppointment' method='POST'>
+          <input type='hidden' name=apt[status] value='pending'>
+          <input id='aptDate' type='hidden' name='apt[date]' value='CHANGE ME'>
+          <div class='form-group'>
+            <label> Owner's Name: </label>
+            <input class='form-control' type='text' name='apt[owner]'>
+          </div>
+          <div class='form-group col-xs-6'>
+            <label> Pet's Name: </label>
+            <input class='form-control' type='text' name='apt[pet]'>
+          </div>
+          <div class='form-group col-xs-6'>
+            <label> Breed: </label>
+            <input class='form-control' type='text' name='apt[breed]'>
+          </div>
+          <div class='form-group col-xs-6'>
+            <label> Phone: </label>
+            <input class='form-control' type='text' name='apt[phone]'>
+          </div>
+          <div class='form-group col-xs-6'>
+            <label> Email: </label>
+            <input class='form-control' type='text' name='apt[email]'>
+          </div>
+          <textarea class='form-control' name='apt[about]' placeholder='Notes. . .'></textarea>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id='aptSubmit' type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
-    <div id="calBox" class="col-md-6">
-      <!-- Calendar is built in script  -->
-    </div>
-
+  </div>
 </div>
+
 
 <script type="text/javascript" src="script/calendar.js">
 //Calendar script builds calendar and displays appointments

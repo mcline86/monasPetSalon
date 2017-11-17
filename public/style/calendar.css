@@ -127,3 +127,11 @@ hr:after {
 .panel-body p {
   padding: 15px;
 }
+
+
+
+#prevMonth, #nextMonth {
+  margin-left: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
