@@ -6,21 +6,49 @@
 <style media="screen">
   #gMap{
     padding: 10px;
-    box-shadow: 0px 5px 10px rgba(50, 50, 50, .75);
+
     border-radius: 10px;
+  }
+
+  #hoursCard {
   }
 </style>
 
 <div id='pageBack' class="container">
   <div class="row">
     <div class="col-8">
-      <iframe id='gMap' width="100%" height="500" frameborder="0" style="border:0"
+      <iframe class='border border-info' id='gMap' width="100%" height="700" frameborder="0"
     src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJXbSbGVqOOIgRGsv1s-tQyT8&key=AIzaSyBBCXEbP4QTKyKgLdozCEXRmfwwNSDjdbI" allowfullscreen>
     </iframe>
     </div>
-  </div>
+    <div class="col-4">
+      <div id='hoursCard' class="card border border-info">
+        <img class='card-img-top' src="images/sign.jpg" alt="">
+        <div class="card-body">
+          <br>
+          <dl class='row'>
+            <dt class='col-sm-6 text-right'>Monday</dt>
+            <dd class='col-sm-6'>8:00am - 8:00pm</dd>
+            <dt class='col-sm-6 text-right'>Tuesday</dt>
+            <dd class='col-sm-6'>8:00am - 8:00pm</dd>
+            <dt class='col-sm-6 text-right'>Wednesday</dt>
+            <dd class='col-sm-6'>8:00am - 8:00pm</dd>
+            <dt class='col-sm-6 text-right'>Thursday</dt>
+            <dd class='col-sm-6'>8:00am - 8:00pm</dd>
+            <dt class='col-sm-6 text-right'>Friday</dt>
+            <dd class='col-sm-6'>8:00am - 8:00pm</dd>
+            <dt class='col-sm-6 text-right'>Saturday</dt>
+            <dd class='col-sm-6'>Closed</dd>
+            <dt class='col-sm-6 text-right'>Sunday</dt>
+            <dd class='col-sm-6'>Closed</dd>
+          </dl>
+        </div>
 
+        <img src='/images/cat-book.jpg' class='card-img-bottom' >
+      </div> <!-- CARD -->
 
+    </div>  <!-- Col-4 DIV -->
+  </div>  <!-- ROW -->
 </div>
 
 
