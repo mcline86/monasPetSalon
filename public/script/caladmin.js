@@ -1,57 +1,147 @@
+var pendingArray = [];
+var openArray = [];
+var archivedArray = [];
 
-buildCal()
 
-function buildCal (){
-  let cal = $("#calBox");
-  cal.html("<h1>" +moment().format("MMM YYYY") + "</h1>");
-  var days = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
-  for(let i = 0; i < days.length; i++){
-    if(i == 0){
-      cal.append("<div class='calHead calLeft'><strong>" + days[i] + "</strong></div>");
-    }
-    else {
-      cal.append("<div class='calHead'><strong>" + days[i] + "</strong></div>");
-    }
-  }
-  for(let row = 0; row < 6; row++){
-    for(let col = 0; col < 7; col++){
-      let Day;
-        if(col == 0) {
-          Day = "<div class='calDay calLeft disabled'> &nbsp; </div>";  // if is on left add calLeft
-          if(row == 5){
-            Day = "<div class='calDay calLeft botLeft disabled'> &nbsp; </div>"; // if is at bottom left
-          }
-        }
-        else {
-          Day = "<div class='calDay disabled'> &nbsp; </div>";
-        }
-        cal.append(Day);
-    } // col for loop
-  }// row for loop
-  fillCal();
+
+var status = [
+  'Pending',
+  'Open',
+  'Canceled',
+  'Closed'
+];
+
+
+
+//======================================================
+//============    Utility Functions  ===================
+//======================================================
+
+function addToPending(appt){
+  pendingArray.push(appt);
+
+  let li = "<a href='#' data-id='" + appt._id + "' class='list-group-item list-group-item-action" +
+                                                " list-group-item-info flex-column align-items-start'>" +
+              "<div class='d-flex w-100 justify-content-between'>" +
+                "<h5 class='mb-1 text-truncate'>" + appt.pet + "</h5>" +
+                "<small>" + appt.date + " </small>" +
+              "</div>" +
+              "<p class='mb-1 text-truncate'>" + appt.about + "</p>" +
+            "</a>";
+  $('#pendGroup').append(li);
 }
 
-function fillCal(){
-  let days = $('div.calDay');
-  let today = moment(new Date());
-  let current = moment(new Date()).date(1);
-  let firstBox = moment().startOf('month').day();
-  current.add((firstBox * -1), 'd');
-  for(let day = 0; day < days.length; day++){
-    if(current.isSame(today)){   $(days[day]).addClass("today");   }
-    if(current.month() == today.month()) {
-      $(days[day]).removeClass("disabled");
-      $(days[day]).attr('data-date', current.format("MM/DD/YYYY"));
-    }
-    $(days[day]).html(current.date());
-    current.add(1, "day");
-  }
-  $("div.calDay").on("click", (e) => {
-    if($(e.target).hasClass("disabled") == false){
-      $("div.calDay").removeClass("selected");
-      let date = $(e.target).data('date');
-      $(e.target).addClass("selected");
-      window.location = "/admin/pending";
-    }
+function addToOpen(appt){
+  openArray.push(appt);
+  let color = "list-group-item-"
+  color += colorByDate(appt.date);
+  let li = "<a href='#' data-id='" + appt._id + "' class='list-group-item list-group-item-action " +
+                                                 color + " flex-column align-items-start'>" +
+              "<div class='d-flex w-100 justify-content-between'>" +
+                "<h5 class='mb-1 text-truncate'>" + appt.pet + "</h5>" +
+                "<small>" + appt.date + " </small>" +
+              "</div>" +
+              "<p class='mb-1'>" + appt.about + "</p>" +
+            "</a>";
+
+  $(li).data('id', appt._id);
+  $('#openGroup').append(li);
+}
+
+function addToClosed(appt){
+  archivedArray.push(appt);
+  let color = "list-group-item-";
+  if(appt.status == "closed"){
+     color += "secondary";
+   }else {
+     color += "danger";
+   }
+
+  let li = "<a href='#' data-id='" + appt._id + "' class='list-group-item list-group-item-action " +
+                                              color + " flex-column align-items-start'>" +
+              "<div class='d-flex w-100 justify-content-between'>" +
+                "<h5 class='mb-1 text-truncate'>" + appt.pet + "</h5>" +
+                "<strong>" + appt.date + " </strong>" +
+              "</div>" +
+            "</a>";
+  $('#closedGroup').append(li);
+}
+
+
+//  Add event listeners to appointment cards
+function refreshHook(){
+  $('.list-group-item').on('click', function(e){
+    let id = $(e.target).data('id');
+    openModal(id);
   });
+}
+
+
+
+function openModal(id){
+  $.ajax({
+    url: "/api/getAptInfo/" + id,
+    success: function(data){
+
+      let status = "<select class='form-control' id='statusSel' name='apt[status]' form='apptForm' style='color:#fff;'>" +
+                  "<option value='pending'> Pending </option>" +
+                  "<option value='open'> Open </option>" +
+                  "<option value='closed'> Closed </option>" +
+                  "<option value='canceled'> Canceled </option>" +
+                  "</select>";
+      $('#aptStatus').html(status);
+      $('#statusSel').addClass(colorSelect(data.status));
+
+      $('#apptOwner').val(data.owner);
+      $('#apptPet').val(data.pet);
+      $('#apptBreed').val(data.breed);
+      $('#apptPhone').val(data.phone);
+      $('#apptEmail').val(data.email);
+      $('#apptAbout').html(data.about);
+      $('#apptDate').val(data.date);
+      $('#statusSel').val(data.status);
+      $('#apptForm').attr('action', '/api/updateAppointment/' + data._id);
+      $('#apptModal').modal().show();
+
+      $('#statusSel').on('click', function(e){
+        console.log("CHANGE");
+        $('#statusSel').removeClass("bg-success bg-info bg-danger bg-secondary");
+        $('#statusSel').addClass(colorSelect($(this).val()))
+      });
+    }
+  })
+}
+
+function colorByDate(date){
+  let today = moment(new Date());
+  let apt = moment(date);
+  console.log(apt.diff(today, 'days'));
+  if(apt.isAfter(today) && apt.diff(today, "days") > 7){
+    return "success";
+  }else if(apt.isAfter(today)){
+    return "warning";
+  }else if(apt.isSame(today, 'date')) {
+    return "primary";
+  } else {
+    return "danger";
+  }
+}
+
+function colorSelect(status){
+  switch(status){
+    case "pending":
+      return "bg-info";
+      break;
+    case "open":
+      return "bg-success";
+      break;
+    case "closed":
+      return "bg-secondary";
+      break;
+    case "canceled":
+      return "bg-danger";
+      break;
+    default:
+      return "";
+  }
 }

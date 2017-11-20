@@ -1,0 +1,33 @@
+<% include partial/header %>
+<script type="text/javascript">
+  $('.nav-link').eq(2).addClass('active')
+</script>
+
+<style media="screen">
+  #gMap{
+    padding: 10px;
+    box-shadow: 0px 5px 10px rgba(50, 50, 50, .75);
+    border-radius: 10px;
+  }
+</style>
+
+<div id='pageBack' class="container">
+  <div class="row">
+    <div class="col-8">
+      <iframe id='gMap' width="100%" height="500" frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJXbSbGVqOOIgRGsv1s-tQyT8&key=AIzaSyBBCXEbP4QTKyKgLdozCEXRmfwwNSDjdbI" allowfullscreen>
+    </iframe>
+    </div>
+  </div>
+
+
+</div>
+
+
+<script type="text/javascript">
+
+
+
+</script>
+
+<% include partial/footer %>

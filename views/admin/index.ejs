@@ -52,6 +52,10 @@
 
 
 <script type="text/javascript">
+
+//==================================================
+//                  Image Info
+//==================================================
 var imagesSizeOnDisk;
 var images = [];
   $(document).ready(function() {
@@ -79,15 +83,24 @@ var images = [];
   function parseImageData(array){
     var inGallery = [];
     var inSlideShow = [];
+    var total = [];
     array.forEach(function(img){
       if(img.inGallery) inGallery.push(img);
       if(img.inSlider) inSlideShow.push(img);
+      total.push(img);
     });
 
-    $('#imgTot').html(inGallery.length + inSlideShow.length);
+    $('#imgTot').html(total.length);
     $('#imgGallery').html(inGallery.length);
     $('#imgSlide').html(inSlideShow.length);
   }
+
+//==================================================
+//              Appointment Info
+//==================================================
+
+
+
 
   $('.nav-link').eq(0).addClass('active');
 </script>

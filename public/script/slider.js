@@ -59,7 +59,7 @@ function buildControls() {
     $(".controls").append(paw);
   }
   $('.controls').append(next);
-
+  
   $('#prev').on('click', function (e) {  prevSlide();  });
   $('#next').on('click', function (e) {  nextSlide();  });
 

@@ -128,10 +128,18 @@ hr:after {
   padding: 15px;
 }
 
-
-
 #prevMonth, #nextMonth {
   margin-left: 20px;
   margin-top: 10px;
   cursor: pointer;
+}
+
+.list-group-item div, .list-group-item p, .list-group-item small{
+  pointer-events: none;
+}
+
+#openGroup, #pendGroup, #closedGroup {
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

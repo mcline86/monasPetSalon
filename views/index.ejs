@@ -10,12 +10,9 @@
 </style>
 
 <div id='pageBack' class="container">
-<% if(error) { %>
-  <div class='flash error'> <%= error.toString() %> </div>
-<% } %>
 <% if(images.length > 0) { %>
     <div id='slider' class='text-center align-middle'>
-      <span id='loading'>[Loading] </span>
+      <span id='loading'>Loading...</span>
       <img id='slide1' />
       <img id='slide2' />
       <div class='controls'> </div>

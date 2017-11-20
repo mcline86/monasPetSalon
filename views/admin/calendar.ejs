@@ -5,16 +5,152 @@
 
 <link rel="stylesheet" href="/style/calendar.css">
 
-<div class="container">
-    <div class="col-md-2"> </div>
-    <div id="calBox" class="col-md-8">
-      <!-- Calendar is built in script  -->
+<div id='pageBack' class="container">
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+            Pending Requests:
+        </div>
+        <div class="card-body">
+          <div id='pendGroup' class="list-group">
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+            Open Appointments:
+        </div>
+        <div class="card-body">
+          <div id='openGroup' class="list-group">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+            Closed Appointments:
+        </div>
+        <div class="card-body">
+          <div id='closedGroup' class="list-group">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<script type="text/javascript" src="/script/caladmin.js">
-//Calendar script builds calendar and displays appointments
+<!-- Modal -->
+<div class="modal fade" id="apptModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Appointment Info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-6 pull-left">
+          <h4 class='text-right'>&emsp;Current Status:</h4>
+        </div>
+        <div class="col-6 pull-right">
+          <span id='aptStatus'></span>
+        </div>
+        <br>
+        <br>
+        <form id='apptForm' class="form" action="/update/appointment/" method="post">
 
+          <div class="col-6 pull-left">
+            <div class='form-group'>
+              <label> Owner's Name: </label>
+              <input id='apptOwner' class='form-control' type='text' name='apt[owner]'>
+            </div>
+            <div class='form-group'>
+              <label> Phone: </label>
+              <input id='apptPhone' class='form-control' type='text' name='apt[phone]'>
+            </div>
+          </div>
+
+          <div class="col-6 pull-right">
+            <div class='form-group'>
+              <label> Pet's Name: </label>
+              <input id='apptPet' class='form-control' type='text' name='apt[pet]'>
+            </div>
+            <div class='form-group'>
+              <label> Breed: </label>
+              <input id='apptBreed' class='form-control' type='text' name='apt[breed]'>
+            </div>
+          </div>
+
+          <div class="col-6 pull-left">
+            <div class='form-group'>
+              <label> Email: </label>
+              <input id='apptEmail' class='form-control' type='text' name='apt[email]'>
+            </div>
+          </div>
+
+          <div class="col-6 pull-right">
+            <div class="form-group">
+              <label>Date: </label>
+              <input id='apptDate' class='form-control' name='apt[date]' type="text" value="">
+            </div>
+          </div>
+
+          <div class="col-12 pull-left">
+            <div class="form-group">
+              <label>Notes: </label>
+              <textarea id='apptAbout' rows='3' class='form-control' name='apt[about]' placeholder='Notes. . .'></textarea>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id='saveAppt' type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="/script/caladmin.js">
+//Calendar script displays appointments
+</script>
+
+<script type="text/javascript">
+
+  $.ajax({
+    url: "/api/getAppointments",
+    success: function(data) {
+      for(i=0; i < data.length; i++){
+        switch(data[i].status){
+          case 'pending':
+            addToPending(data[i]);
+          break;
+          case 'open':
+            addToOpen(data[i]);
+          break;
+          default:
+            addToClosed(data[i]);
+          break;
+        }
+      }
+      refreshHook();
+    }
+  });
+
+  $('#saveAppt').on('click', function(e){
+    $('#apptForm').submit();
+  });
 </script>
 
 <% include ../partial/footer %>

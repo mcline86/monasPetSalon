@@ -15,11 +15,10 @@
     </div>
   </div> <!-- Row End -->
   <div class="row" style="margin-top: 15px;">
-    <div class="col-md-2">  </div>
-    <div class="col-md-8">
+    <div class="col-md-1">  </div>
+    <div class="col-md-10">
 
-          <p> &emsp;After choosing the date you would like to schedule, please choose an appropriate time and provide us with your contact details.
-           Once we verify the date/time is available we will contact you to confirm/reschedule. </p>
+          <p class='text-center'> Select a date for your appointment and fill out the form, any requests without contact information will be deleted immediatelty. For questions or concerns please call: (614) 555-5555</p>
            <hr>
     </div>
   </div>
@@ -39,27 +38,35 @@
         <form id='aptFrm' action='/newAppointment' method='POST'>
           <input type='hidden' name=apt[status] value='pending'>
           <input id='aptDate' type='hidden' name='apt[date]' value='CHANGE ME'>
-          <div class='form-group'>
-            <label> Owner's Name: </label>
-            <input class='form-control' type='text' name='apt[owner]'>
+          <div class="col-12 pull-left">
+            <div class='form-group'>
+              <label> Owner's Name: </label>
+              <input class='form-control' type='text' name='apt[owner]'>
+            </div>
           </div>
-          <div class='form-group col-xs-6'>
-            <label> Pet's Name: </label>
-            <input class='form-control' type='text' name='apt[pet]'>
+          <div class="col-6 pull-left">
+            <div class='form-group'>
+              <label> Pet's Name: </label>
+              <input class='form-control' type='text' name='apt[pet]'>
+            </div>
+            <div class='form-group'>
+              <label> Breed: </label>
+              <input class='form-control' type='text' name='apt[breed]'>
+            </div>
           </div>
-          <div class='form-group col-xs-6'>
-            <label> Breed: </label>
-            <input class='form-control' type='text' name='apt[breed]'>
+          <div class="col-6 pull-right">
+            <div class='form-group'>
+              <label> Phone: </label>
+              <input class='form-control' type='text' name='apt[phone]'>
+            </div>
+            <div class='form-group'>
+              <label> Email: </label>
+              <input class='form-control' type='text' name='apt[email]'>
+            </div>
           </div>
-          <div class='form-group col-xs-6'>
-            <label> Phone: </label>
-            <input class='form-control' type='text' name='apt[phone]'>
+          <div class="col-12 pull-left">
+            <textarea rows='3' class='form-control' name='apt[about]' placeholder='Notes. . .'></textarea>
           </div>
-          <div class='form-group col-xs-6'>
-            <label> Email: </label>
-            <input class='form-control' type='text' name='apt[email]'>
-          </div>
-          <textarea class='form-control' name='apt[about]' placeholder='Notes. . .'></textarea>
         </form>
       </div>
       <div class="modal-footer">
@@ -73,6 +80,7 @@
 
 <script type="text/javascript" src="script/calendar.js">
 //Calendar script builds calendar and displays appointments
+
 </script>
 
 <% include partial/footer %>

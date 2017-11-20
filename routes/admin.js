@@ -118,7 +118,6 @@ exports.removeImage = function(req, res){
       console.log(err);
     } else {
       let publicDir = path.join(__dirname, "../public");
-
       fs.unlinkSync(publicDir + img.file);
       fs.unlinkSync(publicDir + img.thumb);
       Image.remove({_id: ID}, function(err){  if(err){ console.log(err); }  });
@@ -145,20 +144,15 @@ function getTotalSize(folder, cb){
     if(err) throw err;
     return files;
   });
-  console.log("Found ", fileArray.length, " files. . . " );
-
   var totalSizeBytes = 0;
   var sizeOfFile = function(index){
-    console.log("Checking: ", fileArray[index]);
     fs.stat(folder + fileArray[index], function(err, stats){
       if(err) throw err;
       if(stats.isFile()) { totalSizeBytes += stats.size; }
-      console.log("Size: ", stats.size);
       if(index == fileArray.length - 1){
         return cb(totalSizeBytes);
       }else {
         return sizeOfFile(index + 1);
-        console.log("moving to: ", fileArray[index]);
       }
     });
   };

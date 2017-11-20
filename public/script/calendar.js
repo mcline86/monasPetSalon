@@ -93,12 +93,16 @@ function buildForm(date){
   $('#aptDate').val(moment(date).format("MM/DD/YYYY"));
   $('.new-order').modal().show();
   $('#dateBox').html(date);
-
-  if(date.isBefore(moment(new Date()))) {
-    $('#aptForm').hide();
+  
+  if(moment(date).isBefore(moment(new Date()))) {
+    $('#aptSubmit').hide();
+  }else{
+    $('#aptSubmit').show();
   }
 
-    $('#aptSubmit').on('click', (e) => {
+  $('#aptSubmit').on('click', (e) => {
+    if(moment(date).isAfter(moment(new Date()))){
       $('#aptFrm').submit();
-    });
+    }
+  });
 }

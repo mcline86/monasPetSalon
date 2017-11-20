@@ -45,6 +45,12 @@ passport.use(new LocalStrategy(Logon.authenticate()));
 passport.serializeUser(Logon.serializeUser());
 passport.deserializeUser(Logon.deserializeUser());
 
+
+//=====================================================================
+//===                                                               ===
+//===                   Begin Basic Routes                          ===
+//===                                                               ===
+//=====================================================================
 app.get("/", function (req, res) {
   Image.find({inSlider: true}, function(err, images) {
     if(err){
@@ -63,6 +69,10 @@ app.get("/about", function (req, res) {
   res.render("about");
 });
 
+app.get("/info", function (req, res) {
+  res.render("info");
+});
+
 app.get("/gallery", function (req, res) {
   Image.find({inGallery: true}, function(err, images) {
     if(err){
@@ -73,15 +83,21 @@ app.get("/gallery", function (req, res) {
   });
 });
 
-app.get("/image/:id", api.getImageInfo);
-
 app.get("/image/all", api.getAllImages);
+
+app.get("/image/:id", api.getImageInfo);
 
 //===================================================
 //==============   Appointment Crud     =============
 //===================================================
 
 app.post("/newAppointment", basic.newAppointment);
+
+app.get("/api/getAppointments", isLoggedIn, api.getAllApt);
+
+app.get("/api/getAptInfo/:id", isLoggedIn, api.getApt);
+
+app.post("/api/updateAppointment/:id", isLoggedIn, api.updateApt);
 
 //===================================================
 //==============     Admin Routes       =============
