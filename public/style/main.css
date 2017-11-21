@@ -25,11 +25,10 @@
 
 #cpBtn {
   position: absolute;
-  top: 50px;
-  left: 5px;
+  bottom: 0;
+  left: 0px;
   width: 40px;
   height: 40px;
-  border: 1px solid red;
 }
 
 #galleryScrollBox {
@@ -37,6 +36,18 @@
   height: 700px;
   overflow-y: auto;
 }
+
+.modal {
+  background-image: url("../images/Monas_Final.png");
+  background-size: 50%;
+  background-position-x: left;
+  background-position-y: top;
+  background-repeat: no-repeat;
+}
+
+
+
+
 
 .flip {
   -moz-transform: scaleX(-1);

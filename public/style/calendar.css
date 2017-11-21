@@ -12,6 +12,17 @@ h1 span {
   font-size: .75em;
 }
 
+.modal-dialog {
+  top: 175px;
+  left: 150px;
+}
+
+#dateBox {
+  color: #723e99;
+  font-weight:bold;
+  float: right;
+}
+
 .calHead {
  width: 14.28%;
  float:left;

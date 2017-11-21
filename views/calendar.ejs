@@ -25,11 +25,11 @@
 </div>
 
 
-<div class="modal new-order" tabindex="-1" role="dialog">
+<div class="modal fade new-order" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">New Appointment &emsp; <span id='dateBox'class='text-muted'></span></h5>
+        <h5 class="modal-title w-100">New Appointment &emsp; <span id='dateBox' class='pull-right'></span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -40,28 +40,23 @@
           <input id='aptDate' type='hidden' name='apt[date]' value='CHANGE ME'>
           <div class="col-12 pull-left">
             <div class='form-group'>
-              <label> Owner's Name: </label>
-              <input class='form-control' type='text' name='apt[owner]'>
+              <input class='form-control' type='text' name='apt[owner]' placeholder="Pet Owner Name">
             </div>
           </div>
           <div class="col-6 pull-left">
             <div class='form-group'>
-              <label> Pet's Name: </label>
-              <input class='form-control' type='text' name='apt[pet]'>
+              <input class='form-control' type='text' name='apt[pet]' placeholder="Pet Name">
             </div>
             <div class='form-group'>
-              <label> Breed: </label>
-              <input class='form-control' type='text' name='apt[breed]'>
+              <input class='form-control' type='text' name='apt[breed]' placeholder="Breed">
             </div>
           </div>
           <div class="col-6 pull-right">
             <div class='form-group'>
-              <label> Phone: </label>
-              <input class='form-control' type='text' name='apt[phone]'>
+              <input class='form-control' type='text' name='apt[phone]' placeholder="Phone Number">
             </div>
             <div class='form-group'>
-              <label> Email: </label>
-              <input class='form-control' type='text' name='apt[email]'>
+              <input class='form-control' type='text' name='apt[email]' placeholder="Email Address">
             </div>
           </div>
           <div class="col-12 pull-left">

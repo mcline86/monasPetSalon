@@ -1,9 +1,14 @@
 <% include partial/header %>
-<script type="text/javascript">
-  $('#navGallery').addClass('active')
-</script>
+<style media="screen">
+  .modal-content {
+    width: 130%;
+    left: -15%;
+  }
 
-
+  .modal {
+    background-position-x: center;
+  }
+</style>
 
 <div id='pageBack' class="container">
   <% if(images){ images.forEach(function(image){ %>
@@ -45,7 +50,7 @@ $('.imageLink').on('click', function(e){
   }});
 });
 
-$('.nav-link').eq(3).addClass('active');
+$('.nav-link').eq(4).addClass('active');
 </script>
 
 <% include partial/footer %>
