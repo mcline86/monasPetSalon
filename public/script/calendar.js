@@ -8,7 +8,7 @@ var CalendarDate;
 function buildCal (calDate){
   let cal = $("#calBox");
   CalendarDate = calDate.clone();
-  cal.html("<h1>" + moment(calDate).format("MMMM, YYYY") +
+  cal.html("<h1 class='text-bottom'><img src='../images/Monas_Small.png' height='50'> " + moment(calDate).format("MMMM, YYYY") +
   "<span id='nextMonth' class='btn btn-outline-primary pull-right'>Next</span>"+
   "<span id='prevMonth' class='btn btn-outline-primary pull-right'>Prev</span> </h1>");
 
@@ -93,7 +93,7 @@ function buildForm(date){
   $('#aptDate').val(moment(date).format("MM/DD/YYYY"));
   $('.new-order').modal().show();
   $('#dateBox').html(date);
-  
+
   if(moment(date).isBefore(moment(new Date()))) {
     $('#aptSubmit').hide();
   }else{

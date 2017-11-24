@@ -3,7 +3,7 @@
 
 <div id='pageBack' class="container" >
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-header">
           Gallery Information:
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-header">
           Appointment Information:
@@ -34,11 +34,11 @@
         <div class="card-body">
           <dl class='row'>
             <dt class='col-md-6'>Today's : </dt>
-            <dd class='col-md-6 text-right'>[Loading]</dd>
+            <dd class='col-md-6 text-right'> <span id='todayApt'> [Loading] </span> </dd>
             <dt class='col-md-6'>Open Requests:</dt>
-            <dd class='col-md-6 text-right'>[Loading]</dd>
+            <dd class='col-md-6 text-right'><span id='pendingApt'> [Loading] </span></dd>
             <dt class='col-md-6'>Appointments:</dt>
-            <dd class='col-md-6 text-right'>[Loading]</dd>
+            <dd class='col-md-6 text-right'><span id='allOpen'> [Loading] </span></dd>
           </dl>
           <div class="card-text text-right">
             <button class="btn btn-outline-primary" type="button" name="button">Schedule</button>
@@ -98,8 +98,38 @@ var images = [];
 //==================================================
 //              Appointment Info
 //==================================================
+var pendApt = [];
+var openApt = [];
+var aptToday = [];
 
 
+$.ajax({
+  url: "/api/getAppointments",
+  success: function(data){
+    for(let i = 0; i < data.length; i++){
+      switch(data[i].status){
+        case 'pending':
+        pendApt.push(data[i]);
+        break;
+        case 'open':
+          openApt.push(data[i]);
+          let date = moment(data[i].date);
+          let today = moment(new Date());
+          if(today.diff(date, 'days') < 1){
+            aptToday.push(data[i]);
+          }
+        break;
+        default:
+        break;
+      }
+    }
+  },
+  complete: function(){
+    $('#allOpen').html(openApt.length);
+    $('#todayApt').html(aptToday.length);
+    $('#pendingApt').html(pendApt.length);
+  }
+});
 
 
   $('.nav-link').eq(0).addClass('active');
