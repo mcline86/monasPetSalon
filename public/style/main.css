@@ -25,7 +25,7 @@
 
 #cpBtn {
   position: absolute;
-  bottom: 0;
+  top: 40px;
   left: 0px;
   width: 40px;
   height: 40px;
@@ -44,10 +44,6 @@
   background-position-y: top;
   background-repeat: no-repeat;
 }
-
-
-
-
 
 .flip {
   -moz-transform: scaleX(-1);

@@ -16,6 +16,9 @@
     <div class="imgBox pull-left">
       <a href="#" class='imageLink'>
         <img src="<%= image.thumb %>"
+        <% if(image.inSlider) { %>
+          style='box-shadow: 0 0 5px 2px red;'
+        <% } %>
         data-id= "<%= image._id %>">
       </a>
     </div>

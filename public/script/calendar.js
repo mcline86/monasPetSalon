@@ -94,10 +94,10 @@ function buildForm(date){
   $('.new-order').modal().show();
   $('#dateBox').html(date);
 
-  if(moment(date).isBefore(moment(new Date()))) {
-    $('#aptSubmit').hide();
-  }else{
+  if(moment(date).diff(moment(new Date())) > 0 || moment(date).isSame(new Date(), 'date') ) {
     $('#aptSubmit').show();
+  }else{
+    $('#aptSubmit').hide();
   }
 
   $('#aptSubmit').on('click', (e) => {

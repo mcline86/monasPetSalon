@@ -87,6 +87,8 @@ app.get("/image/all", api.getAllImages);
 
 app.get("/image/:id", api.getImageInfo);
 
+app.get("/info_hours", api.getHours);
+
 //===================================================
 //==============   Appointment Crud     =============
 //===================================================
@@ -104,6 +106,8 @@ app.post("/api/updateAppointment/:id", isLoggedIn, api.updateApt);
 //===================================================
 
 app.get("/admin",isLoggedIn, admin.cp);
+
+app.post("/info_hours", isLoggedIn, api.setHours);
 
 app.post("/login", passport.authenticate("local",
   {

@@ -1,5 +1,30 @@
 <% include ../partial/aheader %>
 
+<style media="screen">
+  .card-header {
+    background-color: #e6d3ff;
+    font-weight: bold;
+    color: #723e99;
+  }
+
+  .form-row {
+    margin-top: 7px;
+  }
+
+  .modal-dialog {
+    top: 150px;
+    left: 150px;
+  }
+
+  .btn {
+    cursor: pointer;
+  }
+
+  a.btn {
+    color: #e6d3ff;
+  }
+</style>
+
 
 <div id='pageBack' class="container" >
   <div class="row">
@@ -20,7 +45,7 @@
               <dd class='col-md-6 text-right'><span id='imgSOD'>[Loading]</span></dd>
             </dl>
             <div class="card-text text-right">
-              <button type="button" class="btn btn-outline-primary">Gallery</button>
+              <a href='/admin/gallery' type="button" class="btn btn-primary">Gallery</a>
             </div>
         </div>
       </div>
@@ -41,96 +66,52 @@
             <dd class='col-md-6 text-right'><span id='allOpen'> [Loading] </span></dd>
           </dl>
           <div class="card-text text-right">
-            <button class="btn btn-outline-primary" type="button" name="button">Schedule</button>
+            <a href='/admin/calendar' class="btn btn-primary" type="button" name="button">Schedule</a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
 
+  </div> <!-- ROW -->
 
+  <div class="row">
 
+    <div class="col-md-4" style="margin-top:15px;">
+      <div class="card">
+        <div class="card-header">
+          Hours
+        </div>
+        <div class="card-body">
+          <dl class='row'>
+            <dt class='col-sm-5 text-right'>Monday</dt>
+            <dd id='monInfo' class='col-sm-7'></dd>
+            <dt class='col-sm-5 text-right'>Tuesday</dt>
+            <dd id='tuesInfo' class='col-sm-7'></dd>
+            <dt class='col-sm-5 text-right'>Wednesday</dt>
+            <dd id='wedInfo' class='col-sm-7'></dd>
+            <dt class='col-sm-5 text-right'>Thursday</dt>
+            <dd id='thuInfo' class='col-sm-7'></dd>
+            <dt class='col-sm-5 text-right'>Friday</dt>
+            <dd id='friInfo' class='col-sm-7'></dd>
+            <dt class='col-sm-5 text-right'>Saturday</dt>
+            <dd id='satInfo' class='col-sm-7'></dd>
+            <dt class='col-sm-5 text-right'>Sunday</dt>
+            <dd id='sunInfo' class='col-sm-7'></dd>
+          </dl>
+          <div class="card-text text-right">
+            <button id='edHrsBtn' class="btn btn-primary" type="button" name="button">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- ROW -->
+</div> <!-- Container -->
+
+<% include cpModal %>
+
+<script type="text/javascript" src='script/cp.js'></script>
 <script type="text/javascript">
-
-//==================================================
-//                  Image Info
-//==================================================
-var imagesSizeOnDisk;
-var images = [];
-  $(document).ready(function() {
-    $.ajax({
-      url: "/admin/gallerySOD",
-      success: function(data){
-        imagesSizeOnDisk = data / 1024;
-        $('#imgSOD').html(imagesSizeOnDisk.toFixed(2) + "KB");
-      },
-      complete: function(){
-
-      }
-    });
-
-    $.ajax({
-      url: "/image/all",
-      success: function(data){
-        parseImageData(data);
-      }
-    });
-
-  });
-
-
-  function parseImageData(array){
-    var inGallery = [];
-    var inSlideShow = [];
-    var total = [];
-    array.forEach(function(img){
-      if(img.inGallery) inGallery.push(img);
-      if(img.inSlider) inSlideShow.push(img);
-      total.push(img);
-    });
-
-    $('#imgTot').html(total.length);
-    $('#imgGallery').html(inGallery.length);
-    $('#imgSlide').html(inSlideShow.length);
-  }
-
-//==================================================
-//              Appointment Info
-//==================================================
-var pendApt = [];
-var openApt = [];
-var aptToday = [];
-
-
-$.ajax({
-  url: "/api/getAppointments",
-  success: function(data){
-    for(let i = 0; i < data.length; i++){
-      switch(data[i].status){
-        case 'pending':
-        pendApt.push(data[i]);
-        break;
-        case 'open':
-          openApt.push(data[i]);
-          let date = moment(data[i].date);
-          let today = moment(new Date());
-          if(today.diff(date, 'days') < 1){
-            aptToday.push(data[i]);
-          }
-        break;
-        default:
-        break;
-      }
-    }
-  },
-  complete: function(){
-    $('#allOpen').html(openApt.length);
-    $('#todayApt').html(aptToday.length);
-    $('#pendingApt').html(pendApt.length);
-  }
-});
-
 
   $('.nav-link').eq(0).addClass('active');
 </script>

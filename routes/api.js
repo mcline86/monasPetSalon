@@ -1,6 +1,7 @@
 var Appointment = require("../models/appointment"),
     Image       = require("../models/image"),
-    Logon       = require("../models/logon");
+    Logon       = require("../models/logon"),
+    fs          = require("fs");
 
 
 exports.updateApt = function (req, res, next) {
@@ -57,3 +58,20 @@ exports.getAllImages = function(req, res, next){
     }
   });
 };
+
+exports.getHours = function(req, res, next) {
+  fs.readFile('hours.json', function(err, data){
+    if(err) throw err;
+    res.send(JSON.parse(data));
+    return next();
+  });
+};
+
+exports.setHours = function(req, res, next) {
+  let fileData = JSON.stringify(req.body.hourData);
+  fs.writeFile('hours.json', fileData, function(err, data){
+    if(err) throw err;
+    res.send("Hours Updated");
+    return next();
+  });
+}

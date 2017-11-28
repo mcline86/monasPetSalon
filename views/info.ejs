@@ -27,19 +27,19 @@
         <div class="card-body">
           <dl class='row'>
             <dt class='col-sm-5 text-right'>Monday</dt>
-            <dd class='col-sm-7'>8:00am - 8:00pm</dd>
+            <dd id='monInfo' class='col-sm-7'></dd>
             <dt class='col-sm-5 text-right'>Tuesday</dt>
-            <dd class='col-sm-7'>8:00am - 8:00pm</dd>
+            <dd id='tuesInfo' class='col-sm-7'></dd>
             <dt class='col-sm-5 text-right'>Wednesday</dt>
-            <dd class='col-sm-7'>8:00am - 8:00pm</dd>
+            <dd id='wedInfo' class='col-sm-7'></dd>
             <dt class='col-sm-5 text-right'>Thursday</dt>
-            <dd class='col-sm-7'>8:00am - 8:00pm</dd>
+            <dd id='thuInfo' class='col-sm-7'></dd>
             <dt class='col-sm-5 text-right'>Friday</dt>
-            <dd class='col-sm-7'>8:00am - 8:00pm</dd>
+            <dd id='friInfo' class='col-sm-7'></dd>
             <dt class='col-sm-5 text-right'>Saturday</dt>
-            <dd class='col-sm-7'>Closed</dd>
+            <dd id='satInfo' class='col-sm-7'></dd>
             <dt class='col-sm-5 text-right'>Sunday</dt>
-            <dd class='col-sm-7'>Closed</dd>
+            <dd id='sunInfo' class='col-sm-7'></dd>
           </dl>
         </div>
         <img src='/images/cat-book.jpg' class='card-img-bottom border border-dark' >
@@ -52,8 +52,26 @@
 
 <script type="text/javascript">
 
+$.ajax({
+  url:"/info_hours",
+  success: function(data){
+    $('#monInfo').html(hourString(data['Monday']));
+    $('#tuesInfo').html(hourString(data['Tuesday']));
+    $('#wedInfo').html(hourString(data['Wednesday']));
+    $('#thuInfo').html(hourString(data['Thursday']));
+    $('#friInfo').html(hourString(data['Friday']));
+    $('#satInfo').html(hourString(data['Saturday']));
+    $('#sunInfo').html(hourString(data['Sunday']));
+  }
+});
 
-
+function hourString(day){
+  if(day.open == 'true'){
+    return day.start + " - " + day.end;
+  }else {
+    return "Closed";
+  }
+}
 </script>
 
 <% include partial/footer %>

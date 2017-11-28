@@ -3,15 +3,15 @@ var Appointment   = require("../models/appointment"),
     passport      = require("passport"),
     LocalStrategy = require("passport-local"),
     mongoose      = require("mongoose"),
-    Logon         = require("../models/logon");
-    var gm         = require('gm');
-    var _          = require('lodash');
-    var formidable = require('formidable');
-    var path       = require('path');
-    var fs         = require('fs');
-    var async      = require('async');
-    var util  = require('util');
-    var spawn = require('child_process').spawn;
+    Logon         = require("../models/logon"),
+    gm            = require('gm'),
+    _             = require('lodash'),
+    formidable    = require('formidable'),
+    path          = require('path'),
+    fs            = require('fs'),
+    async         = require('async'),
+    util          = require('util'),
+    spawn         = require('child_process').spawn;
 
 
 exports.cp = function (req, res, next) {
