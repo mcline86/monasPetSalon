@@ -183,3 +183,21 @@ h4.modal-title {
   text-align: center;
   font-size: 1.5em;
 }
+
+.card-header {
+  background-color: #e6d3ff;
+  font-weight: bold;
+  color: #723e99;
+}
+
+.form-row {
+  margin-top: 7px;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+a.btn {
+  color: #e6d3ff;
+}

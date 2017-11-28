@@ -1,34 +1,14 @@
 <% include ../partial/aheader %>
-
 <style media="screen">
-  .card-header {
-    background-color: #e6d3ff;
-    font-weight: bold;
-    color: #723e99;
-  }
-
-  .form-row {
-    margin-top: 7px;
-  }
-
-  .modal-dialog {
-    top: 150px;
-    left: 150px;
-  }
-
-  .btn {
-    cursor: pointer;
-  }
-
-  a.btn {
-    color: #e6d3ff;
-  }
+.modal-dialog {
+  top: 150px;
+  left: 150px;
+}
 </style>
-
 
 <div id='pageBack' class="container" >
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           Gallery Information:
@@ -43,6 +23,8 @@
               <dd class='col-md-6 text-right'><span id='imgGallery'>[Loading]</span></dd>
               <dt class='col-md-6'>Space on Disk: </dt>
               <dd class='col-md-6 text-right'><span id='imgSOD'>[Loading]</span></dd>
+              <dt class='col-md-6'>Space Used: </dt>
+              <dd class='col-md-6 text-right'> <span class='progress text-bottom'> <span id='spaceUsed' class='progress-bar'></span> </span> </dd>
             </dl>
             <div class="card-text text-right">
               <a href='/admin/gallery' type="button" class="btn btn-primary">Gallery</a>
@@ -51,7 +33,7 @@
       </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           Appointment Information:
@@ -72,11 +54,7 @@
       </div>
     </div>
 
-  </div> <!-- ROW -->
-
-  <div class="row">
-
-    <div class="col-md-4" style="margin-top:15px;">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           Hours

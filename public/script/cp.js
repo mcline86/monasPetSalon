@@ -8,7 +8,25 @@ var images = [];
       url: "/admin/gallerySOD",
       success: function(data){
         imagesSizeOnDisk = data / 1024;
-        $('#imgSOD').html(imagesSizeOnDisk.toFixed(2) + "KB");
+        let size = "KB";
+        if(imagesSizeOnDisk > 1024){
+          imagesSizeOnDisk = imagesSizeOnDisk / 1024;
+          size = "MB";
+          if(imagesSizeOnDisk > 1024){
+            imagesSizeOnDisk = imagesSizeOnDisk / 1024;
+            size = "GB"
+          }
+        }
+
+        let pbarTotal = (5*1024) * 1024;
+        let pbarValue = data / 1024;
+
+        let percent = pbarValue / pbarTotal;
+        percent = percent.toFixed(4) * 100;
+        if(percent > 10){percent = percent.toFixed(0)}
+        $('#spaceUsed').attr('width', percent + "%");
+        $('#spaceUsed').html(percent + "%");
+        $('#imgSOD').html(imagesSizeOnDisk.toFixed(2) + " ("+ size +")");
       },
       complete: function(){
 
